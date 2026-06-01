@@ -1,0 +1,16 @@
+# 1. The Run Table (Deposits miles)
+type Run @table(name: "run", key: "id") {
+  id: UUID! @default(expr: "uuidV4()")
+  date: Date!
+  distanceMiles: Float!
+  durationMinutes: Int!
+}
+
+# 2. The Restaurant Table (Spends miles)
+type Restaurant @table(name: "restaurant", key: "id") {
+  id: UUID! @default(expr: "uuidV4()")
+  name: String!
+  cuisine: String!
+  milesRequired: Float!
+  isVisited: Boolean! @default(value: false)
+}

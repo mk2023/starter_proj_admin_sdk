@@ -1,0 +1,226 @@
+extend type Mutation {
+  """
+  ✨ Insert a single `Restaurant` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  restaurant_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: Restaurant_Data!
+  ): Restaurant_KeyOutput! @fdc_generated(from: "Restaurant", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert a single `Run` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  run_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: Run_Data!
+  ): Run_KeyOutput! @fdc_generated(from: "Run", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert `Restaurant` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  restaurant_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [Restaurant_Data!]!
+  ): [Restaurant_KeyOutput!]! @fdc_generated(from: "Restaurant", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert `Run` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  run_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [Run_Data!]!
+  ): [Run_KeyOutput!]! @fdc_generated(from: "Run", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert or update a single `Restaurant` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Restaurant`.
+  """
+  restaurant_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: Restaurant_Data!
+  ): Restaurant_KeyOutput! @fdc_generated(from: "Restaurant", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update a single `Run` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Run`.
+  """
+  run_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: Run_Data!
+  ): Run_KeyOutput! @fdc_generated(from: "Run", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update `Restaurant` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Restaurant`.
+  """
+  restaurant_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [Restaurant_Data!]!
+  ): [Restaurant_KeyOutput!]! @fdc_generated(from: "Restaurant", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Insert or update `Run` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Run`.
+  """
+  run_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [Run_Data!]!
+  ): [Run_KeyOutput!]! @fdc_generated(from: "Run", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Update a single `Restaurant` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `Restaurant` or `null` if not found.
+  """
+  restaurant_update(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Restaurant_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Restaurant_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: Restaurant_Data!
+  ): Restaurant_KeyOutput @fdc_generated(from: "Restaurant", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update a single `Run` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `Run` or `null` if not found.
+  """
+  run_update(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Run_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Run_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: Run_Data!
+  ): Run_KeyOutput @fdc_generated(from: "Run", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update `Restaurant` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  restaurant_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: Restaurant_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: Restaurant_Data!
+  ): Int! @fdc_generated(from: "Restaurant", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Update `Run` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  run_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: Run_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: Run_Data!
+  ): Int! @fdc_generated(from: "Run", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Delete a single `Restaurant` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  restaurant_delete(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Restaurant_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Restaurant_FirstRow
+  ): Restaurant_KeyOutput @fdc_generated(from: "Restaurant", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete a single `Run` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  run_delete(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Run_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Run_FirstRow
+  ): Run_KeyOutput @fdc_generated(from: "Run", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete `Restaurant` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  restaurant_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: Restaurant_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "Restaurant", purpose: DELETE_MULTIPLE)
+  """
+  ✨ Delete `Run` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  run_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: Run_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "Run", purpose: DELETE_MULTIPLE)
+}

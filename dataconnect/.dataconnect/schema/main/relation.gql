@@ -1,0 +1,195 @@
+extend type Restaurant {
+  """
+  Implicit metadata field that cannot be written. It provides extra information about query results.
+  """
+  _metadata: _Metadata @fdc_generated(from: "Restaurant", purpose: METADATA_FIELD)
+  """
+  ✨ Count the number of rows in the `Restaurant` table.
+  """
+  _count: Int! @fdc_generated(from: "Restaurant.", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Restaurant` table where the `cuisine` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  cuisine_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Restaurant.cuisine", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Restaurant` table where the `id` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  id_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Restaurant.id", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Restaurant` table where the `isVisited` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  isVisited_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Restaurant.isVisited", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Restaurant` table where the `milesRequired` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  milesRequired_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Restaurant.milesRequired", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Restaurant` table where the `name` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  name_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Restaurant.name", purpose: QUERY_COUNT)
+  """
+  ✨ Sum the `milesRequired` field in the `Restaurant` table.
+  """
+  milesRequired_sum(
+    """
+    Set to true to sum the distinct values.
+    """
+    distinct: Boolean = false
+  ): Float @fdc_generated(from: "Restaurant.milesRequired", purpose: QUERY_SUM)
+  """
+  ✨ Average the `milesRequired` field in the `Restaurant` table.
+  """
+  milesRequired_avg(
+    """
+    Set to true to average the distinct values.
+    """
+    distinct: Boolean = false
+  ): Float @fdc_generated(from: "Restaurant.milesRequired", purpose: QUERY_AVG)
+  """
+  ✨ Minimum of the `milesRequired` field in the `Restaurant` table.
+  """
+  milesRequired_min: Float @fdc_generated(from: "Restaurant.milesRequired", purpose: QUERY_MIN)
+  """
+  ✨ Maximum of the `milesRequired` field in the `Restaurant` table.
+  """
+  milesRequired_max: Float @fdc_generated(from: "Restaurant.milesRequired", purpose: QUERY_MAX)
+  """
+  A generated field that is used for caching results in SDKs.
+  """
+  _id: ID! @fdc_generated(from: "Restaurant.id", purpose: ENTITY_ID)
+}
+extend type Run {
+  """
+  Implicit metadata field that cannot be written. It provides extra information about query results.
+  """
+  _metadata: _Metadata @fdc_generated(from: "Run", purpose: METADATA_FIELD)
+  """
+  ✨ Count the number of rows in the `Run` table.
+  """
+  _count: Int! @fdc_generated(from: "Run.", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Run` table where the `date` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  date_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Run.date", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Run` table where the `distanceMiles` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  distanceMiles_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Run.distanceMiles", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Run` table where the `durationMinutes` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  durationMinutes_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Run.durationMinutes", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Run` table where the `id` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  id_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Run.id", purpose: QUERY_COUNT)
+  """
+  ✨ Sum the `distanceMiles` field in the `Run` table.
+  """
+  distanceMiles_sum(
+    """
+    Set to true to sum the distinct values.
+    """
+    distinct: Boolean = false
+  ): Float @fdc_generated(from: "Run.distanceMiles", purpose: QUERY_SUM)
+  """
+  ✨ Sum the `durationMinutes` field in the `Run` table.
+  """
+  durationMinutes_sum(
+    """
+    Set to true to sum the distinct values.
+    """
+    distinct: Boolean = false
+  ): Int @fdc_generated(from: "Run.durationMinutes", purpose: QUERY_SUM)
+  """
+  ✨ Average the `distanceMiles` field in the `Run` table.
+  """
+  distanceMiles_avg(
+    """
+    Set to true to average the distinct values.
+    """
+    distinct: Boolean = false
+  ): Float @fdc_generated(from: "Run.distanceMiles", purpose: QUERY_AVG)
+  """
+  ✨ Average the `durationMinutes` field in the `Run` table.
+  """
+  durationMinutes_avg(
+    """
+    Set to true to average the distinct values.
+    """
+    distinct: Boolean = false
+  ): Float @fdc_generated(from: "Run.durationMinutes", purpose: QUERY_AVG)
+  """
+  ✨ Minimum of the `date` field in the `Run` table.
+  """
+  date_min: Date @fdc_generated(from: "Run.date", purpose: QUERY_MIN)
+  """
+  ✨ Minimum of the `distanceMiles` field in the `Run` table.
+  """
+  distanceMiles_min: Float @fdc_generated(from: "Run.distanceMiles", purpose: QUERY_MIN)
+  """
+  ✨ Minimum of the `durationMinutes` field in the `Run` table.
+  """
+  durationMinutes_min: Int @fdc_generated(from: "Run.durationMinutes", purpose: QUERY_MIN)
+  """
+  ✨ Maximum of the `date` field in the `Run` table.
+  """
+  date_max: Date @fdc_generated(from: "Run.date", purpose: QUERY_MAX)
+  """
+  ✨ Maximum of the `distanceMiles` field in the `Run` table.
+  """
+  distanceMiles_max: Float @fdc_generated(from: "Run.distanceMiles", purpose: QUERY_MAX)
+  """
+  ✨ Maximum of the `durationMinutes` field in the `Run` table.
+  """
+  durationMinutes_max: Int @fdc_generated(from: "Run.durationMinutes", purpose: QUERY_MAX)
+  """
+  A generated field that is used for caching results in SDKs.
+  """
+  _id: ID! @fdc_generated(from: "Run.id", purpose: ENTITY_ID)
+}

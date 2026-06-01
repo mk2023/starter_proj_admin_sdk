@@ -1,0 +1,71 @@
+# Fetching all runs to get total mileage
+query GetAllRuns {
+  runs(orderBy: [{date: DESC}]) {
+    id
+    date
+    distanceMiles
+    durationMinutes
+  }
+}
+
+# Fetching all restaurants for display
+query GetAllRestaurants {
+  restaurants {
+    id
+    name
+    cuisine
+    milesRequired
+    isVisited
+  }
+}
+
+query GetAllRunsAndRestaurants {
+  runs {
+    id
+    date
+    distanceMiles
+    durationMinutes
+  }
+  restaurants {
+    id
+    name
+    cuisine
+    milesRequired
+    isVisited
+  }
+}
+##MUTATIONS
+
+#Creating a new run entry
+mutation AddRun($date: Date!, $distanceMiles: Float!, $durationMinutes: Int!) {
+  run_insert(data:{
+    date: $date
+    distanceMiles: $distanceMiles 
+    durationMinutes: $durationMinutes
+})
+}
+#creating a new restaurant entry
+mutation AddRestaurant($name: String!, $cuisine: String!, $milesRequired: Float!) {
+  restaurant_insert(data:{
+    name: $name
+    cuisine: $cuisine
+    milesRequired: $milesRequired 
+    ##isVisited will default to false
+})
+}
+# Marking a restaurant as visited
+mutation MarkRestaurantVisited($id: UUID!) {
+  restaurant_update(id: $id, data:{
+    isVisited: true
+})
+}
+# Marking a restaurant as not visited
+mutation UnmarkRestaurantVisited($id: UUID!) {
+  restaurant_update(id: $id, data: {
+    isVisited: false
+  })
+}
+
+mutation deleteRestaurant($id: UUID!) {
+  restaurant_delete(id: $id)
+}

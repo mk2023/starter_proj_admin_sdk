@@ -1,0 +1,108 @@
+extend type Query {
+  """
+  ✨ Look up a single `Restaurant` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
+  """
+  restaurant(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Restaurant_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Restaurant_FirstRow
+  ): Restaurant @fdc_generated(from: "Restaurant", purpose: QUERY_SINGLE)
+  """
+  ✨ Look up a single `Run` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
+  """
+  run(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Run_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Run_FirstRow
+  ): Run @fdc_generated(from: "Run", purpose: QUERY_SINGLE)
+  """
+  ✨ List `Restaurant` objects in the table and return selected fields, optionally filtered by `where` conditions
+  """
+  restaurants(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: Restaurant_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [Restaurant_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: Restaurant_Having
+  ): [Restaurant!]! @fdc_generated(from: "Restaurant", purpose: QUERY_MULTIPLE)
+  """
+  ✨ List `Run` objects in the table and return selected fields, optionally filtered by `where` conditions
+  """
+  runs(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: Run_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [Run_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: Run_Having
+  ): [Run!]! @fdc_generated(from: "Run", purpose: QUERY_MULTIPLE)
+}
