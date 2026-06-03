@@ -22,17 +22,25 @@ function AppContent() {
     handleUndoReward
   } = useData();
 
+  const [showRunsModal, setShowRunsModal] = React.useState(false);
+
   return (
     <div className="dashboard-container">
       <header className="dashboard-header">
         <h1 className="dashboard-title">🏃‍♂️ Mileage for Restaurant Dashboard</h1>
         <div className="stats-row">
-
           <StatCard
             label="Miles Available to Spend"
             value={`${mileageLeft.toFixed(1)} mi`}
             className="available"
           />
+          <button
+            onClick={() => setShowRunsModal(true)}
+            className="button-active"
+            style={{ alignSelf: 'center', height: 'fit-content', padding: '0.85rem 1.5rem' }}
+          >
+            Look at all your runs 🏃‍♂️
+          </button>
         </div>
       </header>
 
@@ -70,6 +78,37 @@ function AppContent() {
           ))}
         </section>
       </main>
+
+      {showRunsModal && (
+        <div className="modal-overlay" onClick={() => setShowRunsModal(false)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>🏃‍♂️ Your Running History</h2>
+              <button className="close-button" onClick={() => setShowRunsModal(false)}>×</button>
+            </div>
+            <div className="modal-body">
+              <table className="runs-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Distance (mi)</th>
+                    <th>Duration (min)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {runs.map(run => (
+                    <tr key={run.id}>
+                      <td>{run.date}</td>
+                      <td>{run.distanceMiles.toFixed(2)}</td>
+                      <td>{run.durationMinutes}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

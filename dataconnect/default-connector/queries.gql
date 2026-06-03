@@ -10,7 +10,7 @@ query GetAllRuns @auth(level: PUBLIC) {
 
 # Fetching all restaurants for display 
 query GetAllRestaurants @auth(level: PUBLIC) {
-  restaurants {
+  restaurants(orderBy: [{milesRequired: DESC}]) {
     id
     name
     cuisine
@@ -20,13 +20,13 @@ query GetAllRestaurants @auth(level: PUBLIC) {
 }
 
 query GetAllRunsAndRestaurants @auth( level: PUBLIC){
-  runs {
+  runs(orderBy: [{date: DESC}]) {
     id
     date
     distanceMiles
     durationMinutes
   }
-  restaurants {
+  restaurants(orderBy: [{milesRequired: DESC}]) {
     id
     name
     cuisine
