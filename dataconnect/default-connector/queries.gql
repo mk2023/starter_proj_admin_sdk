@@ -1,5 +1,5 @@
 # Fetching all runs to get total mileage
-query GetAllRuns {
+query GetAllRuns @auth(level: PUBLIC) {
   runs(orderBy: [{date: DESC}]) {
     id
     date
@@ -9,7 +9,7 @@ query GetAllRuns {
 }
 
 # Fetching all restaurants for display 
-query GetAllRestaurants {
+query GetAllRestaurants @auth(level: PUBLIC) {
   restaurants {
     id
     name
@@ -19,7 +19,7 @@ query GetAllRestaurants {
   }
 }
 
-query GetAllRunsAndRestaurants {
+query GetAllRunsAndRestaurants @auth( level: PUBLIC){
   runs {
     id
     date
@@ -35,7 +35,7 @@ query GetAllRunsAndRestaurants {
   }
 }
 
-query GetMileage {
+query GetMileage @auth( level: PUBLIC){
   mileages {
     id
     netMiles
@@ -45,7 +45,7 @@ query GetMileage {
 ##MUTATIONS
 
 #Creating a new run entry
-mutation AddRun($date: Date!, $distanceMiles: Float!, $durationMinutes: Int!) {
+mutation AddRun($date: Date!, $distanceMiles: Float!, $durationMinutes: Int!) @auth( level: PUBLIC) {
   run_insert(data:{
     date: $date
     distanceMiles: $distanceMiles 
@@ -53,7 +53,7 @@ mutation AddRun($date: Date!, $distanceMiles: Float!, $durationMinutes: Int!) {
 })
 }
 #creating a new restaurant entry
-mutation AddRestaurant($name: String!, $cuisine: String!, $milesRequired: Float!) {
+mutation AddRestaurant($name: String!, $cuisine: String!, $milesRequired: Float!) @auth( level: PUBLIC){
   restaurant_insert(data:{
     name: $name
     cuisine: $cuisine
@@ -62,24 +62,24 @@ mutation AddRestaurant($name: String!, $cuisine: String!, $milesRequired: Float!
 })
 }
 # Marking a restaurant as visited
-mutation MarkRestaurantVisited($id: UUID!) {
+mutation MarkRestaurantVisited($id: UUID!) @auth( level: PUBLIC){
   restaurant_update(id: $id, data:{
     isVisited: true
 })
 }
 # Marking a restaurant as not visited
-mutation UnmarkRestaurantVisited($id: UUID!) {
+mutation UnmarkRestaurantVisited($id: UUID!) @auth( level: PUBLIC){
   restaurant_update(id: $id, data: {
     isVisited: false
   })
 }
 
-mutation deleteRestaurant($id: UUID!) {
+mutation deleteRestaurant($id: UUID!) @auth( level: PUBLIC){
   restaurant_delete(id: $id)
 }
 
 ## Updating mileage after a run is added
-mutation UpdateMileageAfterRun($id: UUID!, $netMiles: Float!) {
+mutation UpdateMileageAfterRun($id: UUID!, $netMiles: Float!) @auth( level: PUBLIC){
   mileage_update(id: $id, data: {
     netMiles: $netMiles
   })
@@ -87,6 +87,6 @@ mutation UpdateMileageAfterRun($id: UUID!, $netMiles: Float!) {
 
 ## Setting a mileage (at the start up execution):
 
-mutation CreateMileage($netMiles: Float!) {
+mutation CreateMileage($netMiles: Float!) @auth( level: PUBLIC){
   mileage_insert(data: { netMiles: $netMiles })
 }
