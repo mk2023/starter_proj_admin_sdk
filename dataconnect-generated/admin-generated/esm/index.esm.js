@@ -72,3 +72,9 @@ export function createMileage(dcOrVarsOrOptions, varsOrOptions, options) {
   return dcInstance.executeMutation('CreateMileage', inputVars, inputOpts);
 }
 
+export function deleteAllData(dcOrOptions, options) {
+  const { dc: dcInstance, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrOptions, options, undefined);
+  dcInstance.useGen(true);
+  return dcInstance.executeMutation('DeleteAllData', undefined, inputOpts);
+}
+

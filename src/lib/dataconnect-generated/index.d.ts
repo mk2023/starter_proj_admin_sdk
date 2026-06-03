@@ -38,6 +38,12 @@ export interface CreateMileageVariables {
   netMiles: number;
 }
 
+export interface DeleteAllDataData {
+  run_deleteMany: number;
+  restaurant_deleteMany: number;
+  mileage_deleteMany: number;
+}
+
 export interface DeleteRestaurantData {
   restaurant_delete?: Restaurant_Key | null;
 }
@@ -259,4 +265,16 @@ export const createMileageRef: CreateMileageRef;
 
 export function createMileage(vars: CreateMileageVariables): MutationPromise<CreateMileageData, CreateMileageVariables>;
 export function createMileage(dc: DataConnect, vars: CreateMileageVariables): MutationPromise<CreateMileageData, CreateMileageVariables>;
+
+interface DeleteAllDataRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (): MutationRef<DeleteAllDataData, undefined>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect): MutationRef<DeleteAllDataData, undefined>;
+  operationName: string;
+}
+export const deleteAllDataRef: DeleteAllDataRef;
+
+export function deleteAllData(): MutationPromise<DeleteAllDataData, undefined>;
+export function deleteAllData(dc: DataConnect): MutationPromise<DeleteAllDataData, undefined>;
 

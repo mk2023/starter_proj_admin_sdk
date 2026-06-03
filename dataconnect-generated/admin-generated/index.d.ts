@@ -36,6 +36,12 @@ export interface CreateMileageVariables {
   netMiles: number;
 }
 
+export interface DeleteAllDataData {
+  run_deleteMany: number;
+  restaurant_deleteMany: number;
+  mileage_deleteMany: number;
+}
+
 export interface DeleteRestaurantData {
   restaurant_delete?: Restaurant_Key | null;
 }
@@ -180,4 +186,9 @@ export function updateMileageAfterRun(vars: UpdateMileageAfterRunVariables, opti
 export function createMileage(dc: DataConnect, vars: CreateMileageVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<CreateMileageData>>;
 /** Generated Node Admin SDK operation action function for the 'CreateMileage' Mutation. Allow users to pass in custom DataConnect instances. */
 export function createMileage(vars: CreateMileageVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<CreateMileageData>>;
+
+/** Generated Node Admin SDK operation action function for the 'DeleteAllData' Mutation. Allow users to execute without passing in DataConnect. */
+export function deleteAllData(dc: DataConnect, options?: OperationOptions): Promise<ExecuteOperationResponse<DeleteAllDataData>>;
+/** Generated Node Admin SDK operation action function for the 'DeleteAllData' Mutation. Allow users to pass in custom DataConnect instances. */
+export function deleteAllData(options?: OperationOptions): Promise<ExecuteOperationResponse<DeleteAllDataData>>;
 

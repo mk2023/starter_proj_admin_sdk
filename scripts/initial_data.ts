@@ -35,14 +35,14 @@ const queriesPath = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '
 const queriesRaw = fs.readFileSync(queriesPath, 'utf-8');
 
 async function initial_push() {
-
-  //Wiping the Data
-  console.log("Wiping out Data!");
-
-  //================================//
-
   console.log("Starting database initial setup using Firebase Node Admin SDK...");
   try {
+    //Wiping all the data (reset);
+    console.log("Wiping out Data!");
+    await dataConnect.executeGraphql(queriesRaw, {
+      operationName: 'DeleteAllData'
+    });
+
     let current_mileage = 0;
     // Inputting Runs:
     console.log("🏃‍♂️ Logging initial workouts...");

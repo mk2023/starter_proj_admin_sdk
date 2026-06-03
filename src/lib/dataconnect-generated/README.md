@@ -20,6 +20,7 @@ This README will guide you through the process of using the generated JavaScript
   - [*deleteRestaurant*](#deleterestaurant)
   - [*UpdateMileageAfterRun*](#updatemileageafterrun)
   - [*CreateMileage*](#createmileage)
+  - [*DeleteAllData*](#deletealldata)
 
 # Accessing the connector
 A connector is a collection of Queries and Mutations. One SDK is generated for each connector - this SDK is generated for the connector `default-connector`. You can find more information about connectors in the [Data Connect documentation](https://firebase.google.com/docs/data-connect#how-does).
@@ -1250,6 +1251,107 @@ console.log(data.mileage_insert);
 executeMutation(ref).then((response) => {
   const data = response.data;
   console.log(data.mileage_insert);
+});
+```
+
+## DeleteAllData
+You can execute the `DeleteAllData` mutation using the following action shortcut function, or by calling `executeMutation()` after calling the following `MutationRef` function, both of which are defined in [dataconnect-generated/index.d.ts](./index.d.ts):
+```typescript
+deleteAllData(): MutationPromise<DeleteAllDataData, undefined>;
+
+interface DeleteAllDataRef {
+  ...
+  /* Allow users to create refs without passing in DataConnect */
+  (): MutationRef<DeleteAllDataData, undefined>;
+}
+export const deleteAllDataRef: DeleteAllDataRef;
+```
+You can also pass in a `DataConnect` instance to the action shortcut function or `MutationRef` function.
+```typescript
+deleteAllData(dc: DataConnect): MutationPromise<DeleteAllDataData, undefined>;
+
+interface DeleteAllDataRef {
+  ...
+  (dc: DataConnect): MutationRef<DeleteAllDataData, undefined>;
+}
+export const deleteAllDataRef: DeleteAllDataRef;
+```
+
+If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the deleteAllDataRef:
+```typescript
+const name = deleteAllDataRef.operationName;
+console.log(name);
+```
+
+### Variables
+The `DeleteAllData` mutation has no variables.
+### Return Type
+Recall that executing the `DeleteAllData` mutation returns a `MutationPromise` that resolves to an object with a `data` property.
+
+The `data` property is an object of type `DeleteAllDataData`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+```typescript
+export interface DeleteAllDataData {
+  run_deleteMany: number;
+  restaurant_deleteMany: number;
+  mileage_deleteMany: number;
+}
+```
+### Using `DeleteAllData`'s action shortcut function
+
+```typescript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, deleteAllData } from '@dataconnect/generated';
+
+
+// Call the `deleteAllData()` function to execute the mutation.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await deleteAllData();
+
+// You can also pass in a `DataConnect` instance to the action shortcut function.
+const dataConnect = getDataConnect(connectorConfig);
+const { data } = await deleteAllData(dataConnect);
+
+console.log(data.run_deleteMany);
+console.log(data.restaurant_deleteMany);
+console.log(data.mileage_deleteMany);
+
+// Or, you can use the `Promise` API.
+deleteAllData().then((response) => {
+  const data = response.data;
+  console.log(data.run_deleteMany);
+  console.log(data.restaurant_deleteMany);
+  console.log(data.mileage_deleteMany);
+});
+```
+
+### Using `DeleteAllData`'s `MutationRef` function
+
+```typescript
+import { getDataConnect, executeMutation } from 'firebase/data-connect';
+import { connectorConfig, deleteAllDataRef } from '@dataconnect/generated';
+
+
+// Call the `deleteAllDataRef()` function to get a reference to the mutation.
+const ref = deleteAllDataRef();
+
+// You can also pass in a `DataConnect` instance to the `MutationRef` function.
+const dataConnect = getDataConnect(connectorConfig);
+const ref = deleteAllDataRef(dataConnect);
+
+// Call `executeMutation()` on the reference to execute the mutation.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await executeMutation(ref);
+
+console.log(data.run_deleteMany);
+console.log(data.restaurant_deleteMany);
+console.log(data.mileage_deleteMany);
+
+// Or, you can use the `Promise` API.
+executeMutation(ref).then((response) => {
+  const data = response.data;
+  console.log(data.run_deleteMany);
+  console.log(data.restaurant_deleteMany);
+  console.log(data.mileage_deleteMany);
 });
 ```
 

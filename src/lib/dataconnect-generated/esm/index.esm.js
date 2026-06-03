@@ -141,3 +141,15 @@ export function createMileage(dcOrVars, vars) {
   return executeMutation(createMileageRef(dcInstance, inputVars));
 }
 
+export const deleteAllDataRef = (dc) => {
+  const { dc: dcInstance} = validateArgs(connectorConfig, dc, undefined);
+  dcInstance._useGeneratedSdk();
+  return mutationRef(dcInstance, 'DeleteAllData');
+}
+deleteAllDataRef.operationName = 'DeleteAllData';
+
+export function deleteAllData(dc) {
+  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dc, undefined);
+  return executeMutation(deleteAllDataRef(dcInstance, inputVars));
+}
+

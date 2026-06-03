@@ -38,11 +38,11 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const loadDashboardData = async () => {
     try {
-      const response = await getAllRunsAndRestaurants(dataConnectInstance);
+      const response = await getAllRunsAndRestaurants(dataConnectInstance, { fetchPolicy: 'SERVER_ONLY' });
       setRuns(response.data.runs || []);
       setRestaurants(response.data.restaurants || []);
 
-      const mileageData = await getMileage(dataConnectInstance);
+      const mileageData = await getMileage(dataConnectInstance, { fetchPolicy: 'SERVER_ONLY' });
       if (mileageData.data.mileages && mileageData.data.mileages.length > 0) {
         setMileageLeft(mileageData.data.mileages[0].netMiles);
         setMileageId(mileageData.data.mileages[0].id);
@@ -70,7 +70,7 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         await updateMileageAfterRun(dataConnectInstance, updateVariables);
       }
 
-      await loadDashboardData();
+      loadDashboardData();
     } catch (err) {
       console.error("Failed to log run:", err);
       throw err;
@@ -81,7 +81,7 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     try {
       const variables: AddRestaurantVariables = { name, cuisine, milesRequired };
       await addRestaurant(dataConnectInstance, variables);
-      await loadDashboardData();
+      loadDashboardData();
     } catch (err) {
       console.error("Failed to add restaurant item:", err);
       throw err;
@@ -99,7 +99,7 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         await updateMileageAfterRun(dataConnectInstance, updateVariables);
       }
 
-      await loadDashboardData();
+      loadDashboardData();
     } catch (err) {
       console.error("Claim reward failed:", err);
     }
@@ -116,7 +116,7 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         await updateMileageAfterRun(dataConnectInstance, updateVariables);
       }
 
-      await loadDashboardData();
+      loadDashboardData();
     } catch (err) {
       console.error("Undo reward failed:", err);
     }

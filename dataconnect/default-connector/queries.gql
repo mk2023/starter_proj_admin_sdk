@@ -90,3 +90,10 @@ mutation UpdateMileageAfterRun($id: UUID!, $netMiles: Float!) @auth( level: PUBL
 mutation CreateMileage($netMiles: Float!) @auth( level: PUBLIC){
   mileage_insert(data: { netMiles: $netMiles })
 }
+
+# Delete all data from all tables
+mutation DeleteAllData @auth(level: PUBLIC) {
+  run_deleteMany(all: true)
+  restaurant_deleteMany(all: true)
+  mileage_deleteMany(all: true)
+}
