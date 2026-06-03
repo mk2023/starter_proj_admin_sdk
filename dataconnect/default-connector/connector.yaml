@@ -1,1 +1,12 @@
-connectorId: "default"
+connectorId: "default-connector"
+generate:
+## Will make the web client SDK (for the UI)
+  javascriptSdk:
+    outputDir: "../../src/lib/dataconnect-generated"
+    package: "@dataconnect/generated"
+    packageJsonDir: "../../"
+## Will make the admin node.js SDK (for the initial data script)
+  adminNodeSdk:
+    outputDir: "../../dataconnect-generated/admin-generated"
+    package: "@dataconnect/admin-generated"
+    packageJsonDir: "../../"

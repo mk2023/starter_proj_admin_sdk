@@ -1,5 +1,14 @@
 extend type Mutation {
   """
+  ✨ Insert a single `Mileage` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  mileage_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: Mileage_Data!
+  ): Mileage_KeyOutput! @fdc_generated(from: "Mileage", purpose: INSERT_SINGLE)
+  """
   ✨ Insert a single `Restaurant` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
   """
   restaurant_insert(
@@ -17,6 +26,15 @@ extend type Mutation {
     """
     data: Run_Data!
   ): Run_KeyOutput! @fdc_generated(from: "Run", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert `Mileage` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  mileage_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [Mileage_Data!]!
+  ): [Mileage_KeyOutput!]! @fdc_generated(from: "Mileage", purpose: INSERT_MULTIPLE)
   """
   ✨ Insert `Restaurant` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
   """
@@ -36,6 +54,15 @@ extend type Mutation {
     data: [Run_Data!]!
   ): [Run_KeyOutput!]! @fdc_generated(from: "Run", purpose: INSERT_MULTIPLE)
   """
+  ✨ Insert or update a single `Mileage` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Mileage`.
+  """
+  mileage_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: Mileage_Data!
+  ): Mileage_KeyOutput! @fdc_generated(from: "Mileage", purpose: UPSERT_SINGLE)
+  """
   ✨ Insert or update a single `Restaurant` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Restaurant`.
   """
   restaurant_upsert(
@@ -54,6 +81,15 @@ extend type Mutation {
     data: Run_Data!
   ): Run_KeyOutput! @fdc_generated(from: "Run", purpose: UPSERT_SINGLE)
   """
+  ✨ Insert or update `Mileage` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Mileage`.
+  """
+  mileage_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [Mileage_Data!]!
+  ): [Mileage_KeyOutput!]! @fdc_generated(from: "Mileage", purpose: UPSERT_MULTIPLE)
+  """
   ✨ Insert or update `Restaurant` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Restaurant`.
   """
   restaurant_upsertMany(
@@ -71,6 +107,30 @@ extend type Mutation {
     """
     data: [Run_Data!]!
   ): [Run_KeyOutput!]! @fdc_generated(from: "Run", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Update a single `Mileage` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `Mileage` or `null` if not found.
+  """
+  mileage_update(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Mileage_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Mileage_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: Mileage_Data!
+  ): Mileage_KeyOutput @fdc_generated(from: "Mileage", purpose: UPDATE_SINGLE)
   """
   ✨ Update a single `Restaurant` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `Restaurant` or `null` if not found.
   """
@@ -120,6 +180,25 @@ extend type Mutation {
     data: Run_Data!
   ): Run_KeyOutput @fdc_generated(from: "Run", purpose: UPDATE_SINGLE)
   """
+  ✨ Update `Mileage` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  mileage_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: Mileage_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: Mileage_Data!
+  ): Int! @fdc_generated(from: "Mileage", purpose: UPDATE_MULTIPLE)
+  """
   ✨ Update `Restaurant` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
   """
   restaurant_updateMany(
@@ -158,6 +237,25 @@ extend type Mutation {
     data: Run_Data!
   ): Int! @fdc_generated(from: "Run", purpose: UPDATE_MULTIPLE)
   """
+  ✨ Delete a single `Mileage` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  mileage_delete(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Mileage_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Mileage_FirstRow
+  ): Mileage_KeyOutput @fdc_generated(from: "Mileage", purpose: DELETE_SINGLE)
+  """
   ✨ Delete a single `Restaurant` based on `id`, `key` or `first` and return its key (or `null` if not found).
   """
   restaurant_delete(
@@ -195,6 +293,20 @@ extend type Mutation {
     """
     first: Run_FirstRow
   ): Run_KeyOutput @fdc_generated(from: "Run", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete `Mileage` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  mileage_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: Mileage_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "Mileage", purpose: DELETE_MULTIPLE)
   """
   ✨ Delete `Restaurant` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
   """

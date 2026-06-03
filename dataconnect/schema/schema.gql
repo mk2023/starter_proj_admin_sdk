@@ -14,3 +14,9 @@ type Restaurant @table(name: "restaurant", key: "id") {
   milesRequired: Float!
   isVisited: Boolean! @default(value: false)
 }
+
+#3. Table that Tracks Current Mileage
+type Mileage @table(name: "mileage", key: "id") {
+  id: UUID! @default(expr: "uuidV4()")
+  netMiles: Float! @default(value: 0)
+}

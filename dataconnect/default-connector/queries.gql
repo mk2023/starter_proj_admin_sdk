@@ -8,7 +8,7 @@ query GetAllRuns {
   }
 }
 
-# Fetching all restaurants for display
+# Fetching all restaurants for display 
 query GetAllRestaurants {
   restaurants {
     id
@@ -34,6 +34,14 @@ query GetAllRunsAndRestaurants {
     isVisited
   }
 }
+
+query GetMileage {
+  mileages {
+    id
+    netMiles
+  }
+}
+
 ##MUTATIONS
 
 #Creating a new run entry
@@ -68,4 +76,17 @@ mutation UnmarkRestaurantVisited($id: UUID!) {
 
 mutation deleteRestaurant($id: UUID!) {
   restaurant_delete(id: $id)
+}
+
+## Updating mileage after a run is added
+mutation UpdateMileageAfterRun($id: UUID!, $netMiles: Float!) {
+  mileage_update(id: $id, data: {
+    netMiles: $netMiles
+  })
+} 
+
+## Setting a mileage (at the start up execution):
+
+mutation CreateMileage($netMiles: Float!) {
+  mileage_insert(data: { netMiles: $netMiles })
 }
