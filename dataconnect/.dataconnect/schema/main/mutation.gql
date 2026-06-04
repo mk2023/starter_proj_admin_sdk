@@ -27,6 +27,15 @@ extend type Mutation {
     data: Run_Data!
   ): Run_KeyOutput! @fdc_generated(from: "Run", purpose: INSERT_SINGLE)
   """
+  ✨ Insert a single `VisitedRestaurant` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  visitedRestaurant_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: VisitedRestaurant_Data!
+  ): VisitedRestaurant_KeyOutput! @fdc_generated(from: "VisitedRestaurant", purpose: INSERT_SINGLE)
+  """
   ✨ Insert `Mileage` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
   """
   mileage_insertMany(
@@ -53,6 +62,15 @@ extend type Mutation {
     """
     data: [Run_Data!]!
   ): [Run_KeyOutput!]! @fdc_generated(from: "Run", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert `VisitedRestaurant` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  visitedRestaurant_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [VisitedRestaurant_Data!]!
+  ): [VisitedRestaurant_KeyOutput!]! @fdc_generated(from: "VisitedRestaurant", purpose: INSERT_MULTIPLE)
   """
   ✨ Insert or update a single `Mileage` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Mileage`.
   """
@@ -81,6 +99,15 @@ extend type Mutation {
     data: Run_Data!
   ): Run_KeyOutput! @fdc_generated(from: "Run", purpose: UPSERT_SINGLE)
   """
+  ✨ Insert or update a single `VisitedRestaurant` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `VisitedRestaurant`.
+  """
+  visitedRestaurant_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: VisitedRestaurant_Data!
+  ): VisitedRestaurant_KeyOutput! @fdc_generated(from: "VisitedRestaurant", purpose: UPSERT_SINGLE)
+  """
   ✨ Insert or update `Mileage` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Mileage`.
   """
   mileage_upsertMany(
@@ -108,14 +135,18 @@ extend type Mutation {
     data: [Run_Data!]!
   ): [Run_KeyOutput!]! @fdc_generated(from: "Run", purpose: UPSERT_MULTIPLE)
   """
+  ✨ Insert or update `VisitedRestaurant` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `VisitedRestaurant`.
+  """
+  visitedRestaurant_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [VisitedRestaurant_Data!]!
+  ): [VisitedRestaurant_KeyOutput!]! @fdc_generated(from: "VisitedRestaurant", purpose: UPSERT_MULTIPLE)
+  """
   ✨ Update a single `Mileage` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `Mileage` or `null` if not found.
   """
   mileage_update(
-    """
-    The unique ID of the object.
-    """
-    id: UUID
-
     """
     The key used to identify the object.
     """
@@ -180,6 +211,30 @@ extend type Mutation {
     data: Run_Data!
   ): Run_KeyOutput @fdc_generated(from: "Run", purpose: UPDATE_SINGLE)
   """
+  ✨ Update a single `VisitedRestaurant` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `VisitedRestaurant` or `null` if not found.
+  """
+  visitedRestaurant_update(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: VisitedRestaurant_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: VisitedRestaurant_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: VisitedRestaurant_Data!
+  ): VisitedRestaurant_KeyOutput @fdc_generated(from: "VisitedRestaurant", purpose: UPDATE_SINGLE)
+  """
   ✨ Update `Mileage` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
   """
   mileage_updateMany(
@@ -237,14 +292,28 @@ extend type Mutation {
     data: Run_Data!
   ): Int! @fdc_generated(from: "Run", purpose: UPDATE_MULTIPLE)
   """
+  ✨ Update `VisitedRestaurant` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  visitedRestaurant_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: VisitedRestaurant_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: VisitedRestaurant_Data!
+  ): Int! @fdc_generated(from: "VisitedRestaurant", purpose: UPDATE_MULTIPLE)
+  """
   ✨ Delete a single `Mileage` based on `id`, `key` or `first` and return its key (or `null` if not found).
   """
   mileage_delete(
-    """
-    The unique ID of the object.
-    """
-    id: UUID
-
     """
     The key used to identify the object.
     """
@@ -294,6 +363,25 @@ extend type Mutation {
     first: Run_FirstRow
   ): Run_KeyOutput @fdc_generated(from: "Run", purpose: DELETE_SINGLE)
   """
+  ✨ Delete a single `VisitedRestaurant` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  visitedRestaurant_delete(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: VisitedRestaurant_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: VisitedRestaurant_FirstRow
+  ): VisitedRestaurant_KeyOutput @fdc_generated(from: "VisitedRestaurant", purpose: DELETE_SINGLE)
+  """
   ✨ Delete `Mileage` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
   """
   mileage_deleteMany(
@@ -335,4 +423,18 @@ extend type Mutation {
     """
     all: Boolean = false
   ): Int! @fdc_generated(from: "Run", purpose: DELETE_MULTIPLE)
+  """
+  ✨ Delete `VisitedRestaurant` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  visitedRestaurant_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: VisitedRestaurant_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "VisitedRestaurant", purpose: DELETE_MULTIPLE)
 }

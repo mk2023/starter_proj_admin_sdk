@@ -1,6 +1,10 @@
 import React from 'react';
 import './App.css';
 
+//Important Authentication Components
+import { useAuth } from './context/AuthContext';
+import { AuthForm } from './components/AuthForm';
+
 // Import components
 import { StatCard } from './components/StatCard';
 import { RunForm } from './components/RunForm';
@@ -17,17 +21,30 @@ function AppContent() {
     restaurants,
     mileageLeft,
     handleLogRun,
-    handleAddRestaurant,
-    handleClaimReward,
-    handleUndoReward
+    visitedRestaurants,
+    handleClaimReward
   } = useData();
 
+  const { logout } = useAuth();
   const [showRunsModal, setShowRunsModal] = React.useState(false);
+
+  const toVisitRestaurants = restaurants.filter(
+    restaurant => !visitedRestaurants.some(visited => visited.name === restaurant.name)
+  );
 
   return (
     <div className="dashboard-container">
       <header className="dashboard-header">
-        <h1 className="dashboard-title">🏃‍♂️ Mileage for Restaurant Dashboard</h1>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+          <h1 className="dashboard-title" style={{ margin: 0 }}>🏃‍♂️ Mileage for Restaurant Dashboard</h1>
+          <button
+            onClick={logout}
+            className="button-active"
+            style={{ backgroundColor: '#EF4444' }}
+          >
+            Log Out ➔
+          </button>
+        </div>
         <div className="stats-row">
           <StatCard
             label="Miles Available to Spend"
@@ -44,15 +61,14 @@ function AppContent() {
         </div>
       </header>
 
-      <section className="form-container-grid">
+      <section className="form-container-grid" style={{ gridTemplateColumns: '1fr' }}>
         <RunForm onLogRun={handleLogRun} />
-        <RestaurantForm onAddRestaurant={handleAddRestaurant} />
       </section>
 
       <main className="main-grid">
         <section className="column">
           <h2 className="column-title">🎁 To Visit:</h2>
-          {restaurants.filter(r => !r.isVisited).map(restaurant => {
+          {toVisitRestaurants.map(restaurant => {
             const canAfford = mileageLeft >= restaurant.milesRequired;
             return (
               <RestaurantCard
@@ -68,12 +84,12 @@ function AppContent() {
 
         <section className="column">
           <h2 className="column-title">✅ Visited History</h2>
-          {restaurants.filter(r => r.isVisited).map(restaurant => (
+          {visitedRestaurants.map(restaurant => (
             <RestaurantCard
               key={restaurant.id}
-              restaurant={restaurant}
+              restaurant={{ ...restaurant, milesRequired: 0 }}
               isVisited={true}
-              onAction={handleUndoReward}
+              onAction={() => { }}
             />
           ))}
         </section>
@@ -114,6 +130,10 @@ function AppContent() {
 }
 
 export default function App() {
+  const { currentUser } = useAuth(); //get the current User
+  if (!currentUser) { //if not logged in, make them log in
+    return <AuthForm />;
+  }
   return (
     <DataProvider>
       <AppContent />

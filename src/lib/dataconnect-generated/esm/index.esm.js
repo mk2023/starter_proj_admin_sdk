@@ -5,16 +5,16 @@ export const connectorConfig = {
   service: 'starterproject',
   location: 'us-east4'
 };
-export const getAllRunsRef = (dc) => {
-  const { dc: dcInstance} = validateArgs(connectorConfig, dc, undefined);
+export const getAllRunsRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
   dcInstance._useGeneratedSdk();
-  return queryRef(dcInstance, 'GetAllRuns');
+  return queryRef(dcInstance, 'GetAllRuns', inputVars);
 }
 getAllRunsRef.operationName = 'GetAllRuns';
 
-export function getAllRuns(dcOrOptions, options) {
+export function getAllRuns(dcOrVars, varsOrOptions, options) {
   
-  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrOptions, options, undefined,false, false);
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrVars, varsOrOptions, options, true, true);
   return executeQuery(getAllRunsRef(dcInstance, inputVars), inputOpts && { fetchPolicy: inputOpts.fetchPolicy });
 }
 
@@ -31,29 +31,42 @@ export function getAllRestaurants(dcOrOptions, options) {
   return executeQuery(getAllRestaurantsRef(dcInstance, inputVars), inputOpts && { fetchPolicy: inputOpts.fetchPolicy });
 }
 
-export const getAllRunsAndRestaurantsRef = (dc) => {
-  const { dc: dcInstance} = validateArgs(connectorConfig, dc, undefined);
+export const getAllRunsAndRestaurantsRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
   dcInstance._useGeneratedSdk();
-  return queryRef(dcInstance, 'GetAllRunsAndRestaurants');
+  return queryRef(dcInstance, 'GetAllRunsAndRestaurants', inputVars);
 }
 getAllRunsAndRestaurantsRef.operationName = 'GetAllRunsAndRestaurants';
 
-export function getAllRunsAndRestaurants(dcOrOptions, options) {
+export function getAllRunsAndRestaurants(dcOrVars, varsOrOptions, options) {
   
-  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrOptions, options, undefined,false, false);
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrVars, varsOrOptions, options, true, true);
   return executeQuery(getAllRunsAndRestaurantsRef(dcInstance, inputVars), inputOpts && { fetchPolicy: inputOpts.fetchPolicy });
 }
 
-export const getMileageRef = (dc) => {
-  const { dc: dcInstance} = validateArgs(connectorConfig, dc, undefined);
+export const getVisitedRestaurantsRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
   dcInstance._useGeneratedSdk();
-  return queryRef(dcInstance, 'GetMileage');
+  return queryRef(dcInstance, 'GetVisitedRestaurants', inputVars);
+}
+getVisitedRestaurantsRef.operationName = 'GetVisitedRestaurants';
+
+export function getVisitedRestaurants(dcOrVars, varsOrOptions, options) {
+  
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrVars, varsOrOptions, options, true, true);
+  return executeQuery(getVisitedRestaurantsRef(dcInstance, inputVars), inputOpts && { fetchPolicy: inputOpts.fetchPolicy });
+}
+
+export const getMileageRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return queryRef(dcInstance, 'GetMileage', inputVars);
 }
 getMileageRef.operationName = 'GetMileage';
 
-export function getMileage(dcOrOptions, options) {
+export function getMileage(dcOrVars, varsOrOptions, options) {
   
-  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrOptions, options, undefined,false, false);
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrVars, varsOrOptions, options, true, true);
   return executeQuery(getMileageRef(dcInstance, inputVars), inputOpts && { fetchPolicy: inputOpts.fetchPolicy });
 }
 
@@ -81,28 +94,16 @@ export function addRestaurant(dcOrVars, vars) {
   return executeMutation(addRestaurantRef(dcInstance, inputVars));
 }
 
-export const markRestaurantVisitedRef = (dcOrVars, vars) => {
+export const addVisitedRestaurantRef = (dcOrVars, vars) => {
   const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
   dcInstance._useGeneratedSdk();
-  return mutationRef(dcInstance, 'MarkRestaurantVisited', inputVars);
+  return mutationRef(dcInstance, 'AddVisitedRestaurant', inputVars);
 }
-markRestaurantVisitedRef.operationName = 'MarkRestaurantVisited';
+addVisitedRestaurantRef.operationName = 'AddVisitedRestaurant';
 
-export function markRestaurantVisited(dcOrVars, vars) {
+export function addVisitedRestaurant(dcOrVars, vars) {
   const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
-  return executeMutation(markRestaurantVisitedRef(dcInstance, inputVars));
-}
-
-export const unmarkRestaurantVisitedRef = (dcOrVars, vars) => {
-  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
-  dcInstance._useGeneratedSdk();
-  return mutationRef(dcInstance, 'UnmarkRestaurantVisited', inputVars);
-}
-unmarkRestaurantVisitedRef.operationName = 'UnmarkRestaurantVisited';
-
-export function unmarkRestaurantVisited(dcOrVars, vars) {
-  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
-  return executeMutation(unmarkRestaurantVisitedRef(dcInstance, inputVars));
+  return executeMutation(addVisitedRestaurantRef(dcInstance, inputVars));
 }
 
 export const deleteRestaurantRef = (dcOrVars, vars) => {

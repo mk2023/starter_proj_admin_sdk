@@ -7,10 +7,10 @@ const connectorConfig = {
 };
 exports.connectorConfig = connectorConfig;
 
-function getAllRuns(dcOrOptions, options) {
-  const { dc: dcInstance, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrOptions, options, undefined);
+function getAllRuns(dcOrVarsOrOptions, varsOrOptions, options) {
+  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
   dcInstance.useGen(true);
-  return dcInstance.executeQuery('GetAllRuns', undefined, inputOpts);
+  return dcInstance.executeQuery('GetAllRuns', inputVars, inputOpts);
 }
 exports.getAllRuns = getAllRuns;
 
@@ -21,17 +21,24 @@ function getAllRestaurants(dcOrOptions, options) {
 }
 exports.getAllRestaurants = getAllRestaurants;
 
-function getAllRunsAndRestaurants(dcOrOptions, options) {
-  const { dc: dcInstance, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrOptions, options, undefined);
+function getAllRunsAndRestaurants(dcOrVarsOrOptions, varsOrOptions, options) {
+  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
   dcInstance.useGen(true);
-  return dcInstance.executeQuery('GetAllRunsAndRestaurants', undefined, inputOpts);
+  return dcInstance.executeQuery('GetAllRunsAndRestaurants', inputVars, inputOpts);
 }
 exports.getAllRunsAndRestaurants = getAllRunsAndRestaurants;
 
-function getMileage(dcOrOptions, options) {
-  const { dc: dcInstance, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrOptions, options, undefined);
+function getVisitedRestaurants(dcOrVarsOrOptions, varsOrOptions, options) {
+  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
   dcInstance.useGen(true);
-  return dcInstance.executeQuery('GetMileage', undefined, inputOpts);
+  return dcInstance.executeQuery('GetVisitedRestaurants', inputVars, inputOpts);
+}
+exports.getVisitedRestaurants = getVisitedRestaurants;
+
+function getMileage(dcOrVarsOrOptions, varsOrOptions, options) {
+  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
+  dcInstance.useGen(true);
+  return dcInstance.executeQuery('GetMileage', inputVars, inputOpts);
 }
 exports.getMileage = getMileage;
 
@@ -49,19 +56,12 @@ function addRestaurant(dcOrVarsOrOptions, varsOrOptions, options) {
 }
 exports.addRestaurant = addRestaurant;
 
-function markRestaurantVisited(dcOrVarsOrOptions, varsOrOptions, options) {
+function addVisitedRestaurant(dcOrVarsOrOptions, varsOrOptions, options) {
   const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
   dcInstance.useGen(true);
-  return dcInstance.executeMutation('MarkRestaurantVisited', inputVars, inputOpts);
+  return dcInstance.executeMutation('AddVisitedRestaurant', inputVars, inputOpts);
 }
-exports.markRestaurantVisited = markRestaurantVisited;
-
-function unmarkRestaurantVisited(dcOrVarsOrOptions, varsOrOptions, options) {
-  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
-  dcInstance.useGen(true);
-  return dcInstance.executeMutation('UnmarkRestaurantVisited', inputVars, inputOpts);
-}
-exports.unmarkRestaurantVisited = unmarkRestaurantVisited;
+exports.addVisitedRestaurant = addVisitedRestaurant;
 
 function deleteRestaurant(dcOrVarsOrOptions, varsOrOptions, options) {
   const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);

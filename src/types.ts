@@ -9,6 +9,12 @@ export interface Restaurant {
   id: string;
   name: string;
   cuisine: string;
-  milesRequired: number;
-  isVisited: boolean;
+  milesRequired: number
+}
+
+export interface VisitedRestaurant {
+  id: string;
+  name: string;
+  cuisine: string;
+  visitedAt: string;
 }

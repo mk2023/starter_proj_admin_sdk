@@ -28,6 +28,15 @@ export interface AddRunVariables {
   durationMinutes: number;
 }
 
+export interface AddVisitedRestaurantData {
+  visitedRestaurant_insert: VisitedRestaurant_Key;
+}
+
+export interface AddVisitedRestaurantVariables {
+  name: string;
+  cuisine: string;
+}
+
 export interface CreateMileageData {
   mileage_insert: Mileage_Key;
 }
@@ -40,6 +49,7 @@ export interface DeleteAllDataData {
   run_deleteMany: number;
   restaurant_deleteMany: number;
   mileage_deleteMany: number;
+  visitedRestaurant_deleteMany: number;
 }
 
 export interface DeleteRestaurantData {
@@ -56,7 +66,6 @@ export interface GetAllRestaurantsData {
     name: string;
     cuisine: string;
     milesRequired: number;
-    isVisited: boolean;
   } & Restaurant_Key)[];
 }
 
@@ -72,8 +81,11 @@ export interface GetAllRunsAndRestaurantsData {
       name: string;
       cuisine: string;
       milesRequired: number;
-      isVisited: boolean;
     } & Restaurant_Key)[];
+}
+
+export interface GetAllRunsAndRestaurantsVariables {
+  userId: string;
 }
 
 export interface GetAllRunsData {
@@ -85,23 +97,35 @@ export interface GetAllRunsData {
   } & Run_Key)[];
 }
 
+export interface GetAllRunsVariables {
+  userId: string;
+}
+
 export interface GetMileageData {
-  mileages: ({
-    id: UUIDString;
+  mileage?: {
     netMiles: number;
-  } & Mileage_Key)[];
+  };
 }
 
-export interface MarkRestaurantVisitedData {
-  restaurant_update?: Restaurant_Key | null;
+export interface GetMileageVariables {
+  userId: string;
 }
 
-export interface MarkRestaurantVisitedVariables {
-  id: UUIDString;
+export interface GetVisitedRestaurantsData {
+  visitedRestaurants: ({
+    id: UUIDString;
+    name: string;
+    cuisine: string;
+    visitedAt: DateString;
+  } & VisitedRestaurant_Key)[];
+}
+
+export interface GetVisitedRestaurantsVariables {
+  userId: string;
 }
 
 export interface Mileage_Key {
-  id: UUIDString;
+  userId: string;
   __typename?: 'Mileage_Key';
 }
 
@@ -115,27 +139,24 @@ export interface Run_Key {
   __typename?: 'Run_Key';
 }
 
-export interface UnmarkRestaurantVisitedData {
-  restaurant_update?: Restaurant_Key | null;
-}
-
-export interface UnmarkRestaurantVisitedVariables {
-  id: UUIDString;
-}
-
 export interface UpdateMileageAfterRunData {
   mileage_update?: Mileage_Key | null;
 }
 
 export interface UpdateMileageAfterRunVariables {
-  id: UUIDString;
+  userId: string;
   netMiles: number;
 }
 
+export interface VisitedRestaurant_Key {
+  id: UUIDString;
+  __typename?: 'VisitedRestaurant_Key';
+}
+
 /** Generated Node Admin SDK operation action function for the 'GetAllRuns' Query. Allow users to execute without passing in DataConnect. */
-export function getAllRuns(dc: DataConnect, options?: OperationOptions): Promise<ExecuteOperationResponse<GetAllRunsData>>;
+export function getAllRuns(dc: DataConnect, vars: GetAllRunsVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<GetAllRunsData>>;
 /** Generated Node Admin SDK operation action function for the 'GetAllRuns' Query. Allow users to pass in custom DataConnect instances. */
-export function getAllRuns(options?: OperationOptions): Promise<ExecuteOperationResponse<GetAllRunsData>>;
+export function getAllRuns(vars: GetAllRunsVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<GetAllRunsData>>;
 
 /** Generated Node Admin SDK operation action function for the 'GetAllRestaurants' Query. Allow users to execute without passing in DataConnect. */
 export function getAllRestaurants(dc: DataConnect, options?: OperationOptions): Promise<ExecuteOperationResponse<GetAllRestaurantsData>>;
@@ -143,14 +164,19 @@ export function getAllRestaurants(dc: DataConnect, options?: OperationOptions): 
 export function getAllRestaurants(options?: OperationOptions): Promise<ExecuteOperationResponse<GetAllRestaurantsData>>;
 
 /** Generated Node Admin SDK operation action function for the 'GetAllRunsAndRestaurants' Query. Allow users to execute without passing in DataConnect. */
-export function getAllRunsAndRestaurants(dc: DataConnect, options?: OperationOptions): Promise<ExecuteOperationResponse<GetAllRunsAndRestaurantsData>>;
+export function getAllRunsAndRestaurants(dc: DataConnect, vars: GetAllRunsAndRestaurantsVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<GetAllRunsAndRestaurantsData>>;
 /** Generated Node Admin SDK operation action function for the 'GetAllRunsAndRestaurants' Query. Allow users to pass in custom DataConnect instances. */
-export function getAllRunsAndRestaurants(options?: OperationOptions): Promise<ExecuteOperationResponse<GetAllRunsAndRestaurantsData>>;
+export function getAllRunsAndRestaurants(vars: GetAllRunsAndRestaurantsVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<GetAllRunsAndRestaurantsData>>;
+
+/** Generated Node Admin SDK operation action function for the 'GetVisitedRestaurants' Query. Allow users to execute without passing in DataConnect. */
+export function getVisitedRestaurants(dc: DataConnect, vars: GetVisitedRestaurantsVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<GetVisitedRestaurantsData>>;
+/** Generated Node Admin SDK operation action function for the 'GetVisitedRestaurants' Query. Allow users to pass in custom DataConnect instances. */
+export function getVisitedRestaurants(vars: GetVisitedRestaurantsVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<GetVisitedRestaurantsData>>;
 
 /** Generated Node Admin SDK operation action function for the 'GetMileage' Query. Allow users to execute without passing in DataConnect. */
-export function getMileage(dc: DataConnect, options?: OperationOptions): Promise<ExecuteOperationResponse<GetMileageData>>;
+export function getMileage(dc: DataConnect, vars: GetMileageVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<GetMileageData>>;
 /** Generated Node Admin SDK operation action function for the 'GetMileage' Query. Allow users to pass in custom DataConnect instances. */
-export function getMileage(options?: OperationOptions): Promise<ExecuteOperationResponse<GetMileageData>>;
+export function getMileage(vars: GetMileageVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<GetMileageData>>;
 
 /** Generated Node Admin SDK operation action function for the 'AddRun' Mutation. Allow users to execute without passing in DataConnect. */
 export function addRun(dc: DataConnect, vars: AddRunVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<AddRunData>>;
@@ -162,15 +188,10 @@ export function addRestaurant(dc: DataConnect, vars: AddRestaurantVariables, opt
 /** Generated Node Admin SDK operation action function for the 'AddRestaurant' Mutation. Allow users to pass in custom DataConnect instances. */
 export function addRestaurant(vars: AddRestaurantVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<AddRestaurantData>>;
 
-/** Generated Node Admin SDK operation action function for the 'MarkRestaurantVisited' Mutation. Allow users to execute without passing in DataConnect. */
-export function markRestaurantVisited(dc: DataConnect, vars: MarkRestaurantVisitedVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<MarkRestaurantVisitedData>>;
-/** Generated Node Admin SDK operation action function for the 'MarkRestaurantVisited' Mutation. Allow users to pass in custom DataConnect instances. */
-export function markRestaurantVisited(vars: MarkRestaurantVisitedVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<MarkRestaurantVisitedData>>;
-
-/** Generated Node Admin SDK operation action function for the 'UnmarkRestaurantVisited' Mutation. Allow users to execute without passing in DataConnect. */
-export function unmarkRestaurantVisited(dc: DataConnect, vars: UnmarkRestaurantVisitedVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<UnmarkRestaurantVisitedData>>;
-/** Generated Node Admin SDK operation action function for the 'UnmarkRestaurantVisited' Mutation. Allow users to pass in custom DataConnect instances. */
-export function unmarkRestaurantVisited(vars: UnmarkRestaurantVisitedVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<UnmarkRestaurantVisitedData>>;
+/** Generated Node Admin SDK operation action function for the 'AddVisitedRestaurant' Mutation. Allow users to execute without passing in DataConnect. */
+export function addVisitedRestaurant(dc: DataConnect, vars: AddVisitedRestaurantVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<AddVisitedRestaurantData>>;
+/** Generated Node Admin SDK operation action function for the 'AddVisitedRestaurant' Mutation. Allow users to pass in custom DataConnect instances. */
+export function addVisitedRestaurant(vars: AddVisitedRestaurantVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<AddVisitedRestaurantData>>;
 
 /** Generated Node Admin SDK operation action function for the 'DeleteRestaurant' Mutation. Allow users to execute without passing in DataConnect. */
 export function deleteRestaurant(dc: DataConnect, vars: DeleteRestaurantVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<DeleteRestaurantData>>;

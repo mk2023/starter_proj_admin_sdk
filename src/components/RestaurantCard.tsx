@@ -21,13 +21,6 @@ export const RestaurantCard: React.FC<RestaurantCardProps> = ({
           <h3 className="item-name" style={{ textDecoration: 'line-through' }}>{restaurant.name}</h3>
           <p className="item-meta">{restaurant.cuisine} • Already Visited! 🎉</p>
         </div>
-        <button
-          onClick={() => onAction(restaurant)}
-          className="button-active"
-          style={{ backgroundColor: '#EF4444' }}
-        >
-          Undo Visit ↩️
-        </button>
       </div>
     );
   }

@@ -11,12 +11,12 @@ This README will guide you through the process of using the generated JavaScript
   - [*GetAllRuns*](#getallruns)
   - [*GetAllRestaurants*](#getallrestaurants)
   - [*GetAllRunsAndRestaurants*](#getallrunsandrestaurants)
+  - [*GetVisitedRestaurants*](#getvisitedrestaurants)
   - [*GetMileage*](#getmileage)
 - [**Mutations**](#mutations)
   - [*AddRun*](#addrun)
   - [*AddRestaurant*](#addrestaurant)
-  - [*MarkRestaurantVisited*](#markrestaurantvisited)
-  - [*UnmarkRestaurantVisited*](#unmarkrestaurantvisited)
+  - [*AddVisitedRestaurant*](#addvisitedrestaurant)
   - [*deleteRestaurant*](#deleterestaurant)
   - [*UpdateMileageAfterRun*](#updatemileageafterrun)
   - [*CreateMileage*](#createmileage)
@@ -70,22 +70,22 @@ Below are examples of how to use the `default-connector` connector's generated f
 ## GetAllRuns
 You can execute the `GetAllRuns` query using the following action shortcut function, or by calling `executeQuery()` after calling the following `QueryRef` function, both of which are defined in [dataconnect-generated/index.d.ts](./index.d.ts):
 ```typescript
-getAllRuns(options?: ExecuteQueryOptions): QueryPromise<GetAllRunsData, undefined>;
+getAllRuns(vars: GetAllRunsVariables, options?: ExecuteQueryOptions): QueryPromise<GetAllRunsData, GetAllRunsVariables>;
 
 interface GetAllRunsRef {
   ...
   /* Allow users to create refs without passing in DataConnect */
-  (): QueryRef<GetAllRunsData, undefined>;
+  (vars: GetAllRunsVariables): QueryRef<GetAllRunsData, GetAllRunsVariables>;
 }
 export const getAllRunsRef: GetAllRunsRef;
 ```
 You can also pass in a `DataConnect` instance to the action shortcut function or `QueryRef` function.
 ```typescript
-getAllRuns(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<GetAllRunsData, undefined>;
+getAllRuns(dc: DataConnect, vars: GetAllRunsVariables, options?: ExecuteQueryOptions): QueryPromise<GetAllRunsData, GetAllRunsVariables>;
 
 interface GetAllRunsRef {
   ...
-  (dc: DataConnect): QueryRef<GetAllRunsData, undefined>;
+  (dc: DataConnect, vars: GetAllRunsVariables): QueryRef<GetAllRunsData, GetAllRunsVariables>;
 }
 export const getAllRunsRef: GetAllRunsRef;
 ```
@@ -97,7 +97,13 @@ console.log(name);
 ```
 
 ### Variables
-The `GetAllRuns` query has no variables.
+The `GetAllRuns` query requires an argument of type `GetAllRunsVariables`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+
+```typescript
+export interface GetAllRunsVariables {
+  userId: string;
+}
+```
 ### Return Type
 Recall that executing the `GetAllRuns` query returns a `QueryPromise` that resolves to an object with a `data` property.
 
@@ -116,21 +122,27 @@ export interface GetAllRunsData {
 
 ```typescript
 import { getDataConnect } from 'firebase/data-connect';
-import { connectorConfig, getAllRuns } from '@dataconnect/generated';
+import { connectorConfig, getAllRuns, GetAllRunsVariables } from '@dataconnect/generated';
 
+// The `GetAllRuns` query requires an argument of type `GetAllRunsVariables`:
+const getAllRunsVars: GetAllRunsVariables = {
+  userId: ..., 
+};
 
 // Call the `getAllRuns()` function to execute the query.
 // You can use the `await` keyword to wait for the promise to resolve.
-const { data } = await getAllRuns();
+const { data } = await getAllRuns(getAllRunsVars);
+// Variables can be defined inline as well.
+const { data } = await getAllRuns({ userId: ..., });
 
 // You can also pass in a `DataConnect` instance to the action shortcut function.
 const dataConnect = getDataConnect(connectorConfig);
-const { data } = await getAllRuns(dataConnect);
+const { data } = await getAllRuns(dataConnect, getAllRunsVars);
 
 console.log(data.runs);
 
 // Or, you can use the `Promise` API.
-getAllRuns().then((response) => {
+getAllRuns(getAllRunsVars).then((response) => {
   const data = response.data;
   console.log(data.runs);
 });
@@ -140,15 +152,21 @@ getAllRuns().then((response) => {
 
 ```typescript
 import { getDataConnect, executeQuery } from 'firebase/data-connect';
-import { connectorConfig, getAllRunsRef } from '@dataconnect/generated';
+import { connectorConfig, getAllRunsRef, GetAllRunsVariables } from '@dataconnect/generated';
 
+// The `GetAllRuns` query requires an argument of type `GetAllRunsVariables`:
+const getAllRunsVars: GetAllRunsVariables = {
+  userId: ..., 
+};
 
 // Call the `getAllRunsRef()` function to get a reference to the query.
-const ref = getAllRunsRef();
+const ref = getAllRunsRef(getAllRunsVars);
+// Variables can be defined inline as well.
+const ref = getAllRunsRef({ userId: ..., });
 
 // You can also pass in a `DataConnect` instance to the `QueryRef` function.
 const dataConnect = getDataConnect(connectorConfig);
-const ref = getAllRunsRef(dataConnect);
+const ref = getAllRunsRef(dataConnect, getAllRunsVars);
 
 // Call `executeQuery()` on the reference to execute the query.
 // You can use the `await` keyword to wait for the promise to resolve.
@@ -205,7 +223,6 @@ export interface GetAllRestaurantsData {
     name: string;
     cuisine: string;
     milesRequired: number;
-    isVisited: boolean;
   } & Restaurant_Key)[];
 }
 ```
@@ -263,22 +280,22 @@ executeQuery(ref).then((response) => {
 ## GetAllRunsAndRestaurants
 You can execute the `GetAllRunsAndRestaurants` query using the following action shortcut function, or by calling `executeQuery()` after calling the following `QueryRef` function, both of which are defined in [dataconnect-generated/index.d.ts](./index.d.ts):
 ```typescript
-getAllRunsAndRestaurants(options?: ExecuteQueryOptions): QueryPromise<GetAllRunsAndRestaurantsData, undefined>;
+getAllRunsAndRestaurants(vars: GetAllRunsAndRestaurantsVariables, options?: ExecuteQueryOptions): QueryPromise<GetAllRunsAndRestaurantsData, GetAllRunsAndRestaurantsVariables>;
 
 interface GetAllRunsAndRestaurantsRef {
   ...
   /* Allow users to create refs without passing in DataConnect */
-  (): QueryRef<GetAllRunsAndRestaurantsData, undefined>;
+  (vars: GetAllRunsAndRestaurantsVariables): QueryRef<GetAllRunsAndRestaurantsData, GetAllRunsAndRestaurantsVariables>;
 }
 export const getAllRunsAndRestaurantsRef: GetAllRunsAndRestaurantsRef;
 ```
 You can also pass in a `DataConnect` instance to the action shortcut function or `QueryRef` function.
 ```typescript
-getAllRunsAndRestaurants(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<GetAllRunsAndRestaurantsData, undefined>;
+getAllRunsAndRestaurants(dc: DataConnect, vars: GetAllRunsAndRestaurantsVariables, options?: ExecuteQueryOptions): QueryPromise<GetAllRunsAndRestaurantsData, GetAllRunsAndRestaurantsVariables>;
 
 interface GetAllRunsAndRestaurantsRef {
   ...
-  (dc: DataConnect): QueryRef<GetAllRunsAndRestaurantsData, undefined>;
+  (dc: DataConnect, vars: GetAllRunsAndRestaurantsVariables): QueryRef<GetAllRunsAndRestaurantsData, GetAllRunsAndRestaurantsVariables>;
 }
 export const getAllRunsAndRestaurantsRef: GetAllRunsAndRestaurantsRef;
 ```
@@ -290,7 +307,13 @@ console.log(name);
 ```
 
 ### Variables
-The `GetAllRunsAndRestaurants` query has no variables.
+The `GetAllRunsAndRestaurants` query requires an argument of type `GetAllRunsAndRestaurantsVariables`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+
+```typescript
+export interface GetAllRunsAndRestaurantsVariables {
+  userId: string;
+}
+```
 ### Return Type
 Recall that executing the `GetAllRunsAndRestaurants` query returns a `QueryPromise` that resolves to an object with a `data` property.
 
@@ -308,7 +331,6 @@ export interface GetAllRunsAndRestaurantsData {
       name: string;
       cuisine: string;
       milesRequired: number;
-      isVisited: boolean;
     } & Restaurant_Key)[];
 }
 ```
@@ -316,22 +338,28 @@ export interface GetAllRunsAndRestaurantsData {
 
 ```typescript
 import { getDataConnect } from 'firebase/data-connect';
-import { connectorConfig, getAllRunsAndRestaurants } from '@dataconnect/generated';
+import { connectorConfig, getAllRunsAndRestaurants, GetAllRunsAndRestaurantsVariables } from '@dataconnect/generated';
 
+// The `GetAllRunsAndRestaurants` query requires an argument of type `GetAllRunsAndRestaurantsVariables`:
+const getAllRunsAndRestaurantsVars: GetAllRunsAndRestaurantsVariables = {
+  userId: ..., 
+};
 
 // Call the `getAllRunsAndRestaurants()` function to execute the query.
 // You can use the `await` keyword to wait for the promise to resolve.
-const { data } = await getAllRunsAndRestaurants();
+const { data } = await getAllRunsAndRestaurants(getAllRunsAndRestaurantsVars);
+// Variables can be defined inline as well.
+const { data } = await getAllRunsAndRestaurants({ userId: ..., });
 
 // You can also pass in a `DataConnect` instance to the action shortcut function.
 const dataConnect = getDataConnect(connectorConfig);
-const { data } = await getAllRunsAndRestaurants(dataConnect);
+const { data } = await getAllRunsAndRestaurants(dataConnect, getAllRunsAndRestaurantsVars);
 
 console.log(data.runs);
 console.log(data.restaurants);
 
 // Or, you can use the `Promise` API.
-getAllRunsAndRestaurants().then((response) => {
+getAllRunsAndRestaurants(getAllRunsAndRestaurantsVars).then((response) => {
   const data = response.data;
   console.log(data.runs);
   console.log(data.restaurants);
@@ -342,15 +370,21 @@ getAllRunsAndRestaurants().then((response) => {
 
 ```typescript
 import { getDataConnect, executeQuery } from 'firebase/data-connect';
-import { connectorConfig, getAllRunsAndRestaurantsRef } from '@dataconnect/generated';
+import { connectorConfig, getAllRunsAndRestaurantsRef, GetAllRunsAndRestaurantsVariables } from '@dataconnect/generated';
 
+// The `GetAllRunsAndRestaurants` query requires an argument of type `GetAllRunsAndRestaurantsVariables`:
+const getAllRunsAndRestaurantsVars: GetAllRunsAndRestaurantsVariables = {
+  userId: ..., 
+};
 
 // Call the `getAllRunsAndRestaurantsRef()` function to get a reference to the query.
-const ref = getAllRunsAndRestaurantsRef();
+const ref = getAllRunsAndRestaurantsRef(getAllRunsAndRestaurantsVars);
+// Variables can be defined inline as well.
+const ref = getAllRunsAndRestaurantsRef({ userId: ..., });
 
 // You can also pass in a `DataConnect` instance to the `QueryRef` function.
 const dataConnect = getDataConnect(connectorConfig);
-const ref = getAllRunsAndRestaurantsRef(dataConnect);
+const ref = getAllRunsAndRestaurantsRef(dataConnect, getAllRunsAndRestaurantsVars);
 
 // Call `executeQuery()` on the reference to execute the query.
 // You can use the `await` keyword to wait for the promise to resolve.
@@ -367,25 +401,139 @@ executeQuery(ref).then((response) => {
 });
 ```
 
+## GetVisitedRestaurants
+You can execute the `GetVisitedRestaurants` query using the following action shortcut function, or by calling `executeQuery()` after calling the following `QueryRef` function, both of which are defined in [dataconnect-generated/index.d.ts](./index.d.ts):
+```typescript
+getVisitedRestaurants(vars: GetVisitedRestaurantsVariables, options?: ExecuteQueryOptions): QueryPromise<GetVisitedRestaurantsData, GetVisitedRestaurantsVariables>;
+
+interface GetVisitedRestaurantsRef {
+  ...
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: GetVisitedRestaurantsVariables): QueryRef<GetVisitedRestaurantsData, GetVisitedRestaurantsVariables>;
+}
+export const getVisitedRestaurantsRef: GetVisitedRestaurantsRef;
+```
+You can also pass in a `DataConnect` instance to the action shortcut function or `QueryRef` function.
+```typescript
+getVisitedRestaurants(dc: DataConnect, vars: GetVisitedRestaurantsVariables, options?: ExecuteQueryOptions): QueryPromise<GetVisitedRestaurantsData, GetVisitedRestaurantsVariables>;
+
+interface GetVisitedRestaurantsRef {
+  ...
+  (dc: DataConnect, vars: GetVisitedRestaurantsVariables): QueryRef<GetVisitedRestaurantsData, GetVisitedRestaurantsVariables>;
+}
+export const getVisitedRestaurantsRef: GetVisitedRestaurantsRef;
+```
+
+If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the getVisitedRestaurantsRef:
+```typescript
+const name = getVisitedRestaurantsRef.operationName;
+console.log(name);
+```
+
+### Variables
+The `GetVisitedRestaurants` query requires an argument of type `GetVisitedRestaurantsVariables`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+
+```typescript
+export interface GetVisitedRestaurantsVariables {
+  userId: string;
+}
+```
+### Return Type
+Recall that executing the `GetVisitedRestaurants` query returns a `QueryPromise` that resolves to an object with a `data` property.
+
+The `data` property is an object of type `GetVisitedRestaurantsData`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+```typescript
+export interface GetVisitedRestaurantsData {
+  visitedRestaurants: ({
+    id: UUIDString;
+    name: string;
+    cuisine: string;
+    visitedAt: DateString;
+  } & VisitedRestaurant_Key)[];
+}
+```
+### Using `GetVisitedRestaurants`'s action shortcut function
+
+```typescript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, getVisitedRestaurants, GetVisitedRestaurantsVariables } from '@dataconnect/generated';
+
+// The `GetVisitedRestaurants` query requires an argument of type `GetVisitedRestaurantsVariables`:
+const getVisitedRestaurantsVars: GetVisitedRestaurantsVariables = {
+  userId: ..., 
+};
+
+// Call the `getVisitedRestaurants()` function to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await getVisitedRestaurants(getVisitedRestaurantsVars);
+// Variables can be defined inline as well.
+const { data } = await getVisitedRestaurants({ userId: ..., });
+
+// You can also pass in a `DataConnect` instance to the action shortcut function.
+const dataConnect = getDataConnect(connectorConfig);
+const { data } = await getVisitedRestaurants(dataConnect, getVisitedRestaurantsVars);
+
+console.log(data.visitedRestaurants);
+
+// Or, you can use the `Promise` API.
+getVisitedRestaurants(getVisitedRestaurantsVars).then((response) => {
+  const data = response.data;
+  console.log(data.visitedRestaurants);
+});
+```
+
+### Using `GetVisitedRestaurants`'s `QueryRef` function
+
+```typescript
+import { getDataConnect, executeQuery } from 'firebase/data-connect';
+import { connectorConfig, getVisitedRestaurantsRef, GetVisitedRestaurantsVariables } from '@dataconnect/generated';
+
+// The `GetVisitedRestaurants` query requires an argument of type `GetVisitedRestaurantsVariables`:
+const getVisitedRestaurantsVars: GetVisitedRestaurantsVariables = {
+  userId: ..., 
+};
+
+// Call the `getVisitedRestaurantsRef()` function to get a reference to the query.
+const ref = getVisitedRestaurantsRef(getVisitedRestaurantsVars);
+// Variables can be defined inline as well.
+const ref = getVisitedRestaurantsRef({ userId: ..., });
+
+// You can also pass in a `DataConnect` instance to the `QueryRef` function.
+const dataConnect = getDataConnect(connectorConfig);
+const ref = getVisitedRestaurantsRef(dataConnect, getVisitedRestaurantsVars);
+
+// Call `executeQuery()` on the reference to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await executeQuery(ref);
+
+console.log(data.visitedRestaurants);
+
+// Or, you can use the `Promise` API.
+executeQuery(ref).then((response) => {
+  const data = response.data;
+  console.log(data.visitedRestaurants);
+});
+```
+
 ## GetMileage
 You can execute the `GetMileage` query using the following action shortcut function, or by calling `executeQuery()` after calling the following `QueryRef` function, both of which are defined in [dataconnect-generated/index.d.ts](./index.d.ts):
 ```typescript
-getMileage(options?: ExecuteQueryOptions): QueryPromise<GetMileageData, undefined>;
+getMileage(vars: GetMileageVariables, options?: ExecuteQueryOptions): QueryPromise<GetMileageData, GetMileageVariables>;
 
 interface GetMileageRef {
   ...
   /* Allow users to create refs without passing in DataConnect */
-  (): QueryRef<GetMileageData, undefined>;
+  (vars: GetMileageVariables): QueryRef<GetMileageData, GetMileageVariables>;
 }
 export const getMileageRef: GetMileageRef;
 ```
 You can also pass in a `DataConnect` instance to the action shortcut function or `QueryRef` function.
 ```typescript
-getMileage(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<GetMileageData, undefined>;
+getMileage(dc: DataConnect, vars: GetMileageVariables, options?: ExecuteQueryOptions): QueryPromise<GetMileageData, GetMileageVariables>;
 
 interface GetMileageRef {
   ...
-  (dc: DataConnect): QueryRef<GetMileageData, undefined>;
+  (dc: DataConnect, vars: GetMileageVariables): QueryRef<GetMileageData, GetMileageVariables>;
 }
 export const getMileageRef: GetMileageRef;
 ```
@@ -397,40 +545,51 @@ console.log(name);
 ```
 
 ### Variables
-The `GetMileage` query has no variables.
+The `GetMileage` query requires an argument of type `GetMileageVariables`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+
+```typescript
+export interface GetMileageVariables {
+  userId: string;
+}
+```
 ### Return Type
 Recall that executing the `GetMileage` query returns a `QueryPromise` that resolves to an object with a `data` property.
 
 The `data` property is an object of type `GetMileageData`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
 ```typescript
 export interface GetMileageData {
-  mileages: ({
-    id: UUIDString;
+  mileage?: {
     netMiles: number;
-  } & Mileage_Key)[];
+  };
 }
 ```
 ### Using `GetMileage`'s action shortcut function
 
 ```typescript
 import { getDataConnect } from 'firebase/data-connect';
-import { connectorConfig, getMileage } from '@dataconnect/generated';
+import { connectorConfig, getMileage, GetMileageVariables } from '@dataconnect/generated';
 
+// The `GetMileage` query requires an argument of type `GetMileageVariables`:
+const getMileageVars: GetMileageVariables = {
+  userId: ..., 
+};
 
 // Call the `getMileage()` function to execute the query.
 // You can use the `await` keyword to wait for the promise to resolve.
-const { data } = await getMileage();
+const { data } = await getMileage(getMileageVars);
+// Variables can be defined inline as well.
+const { data } = await getMileage({ userId: ..., });
 
 // You can also pass in a `DataConnect` instance to the action shortcut function.
 const dataConnect = getDataConnect(connectorConfig);
-const { data } = await getMileage(dataConnect);
+const { data } = await getMileage(dataConnect, getMileageVars);
 
-console.log(data.mileages);
+console.log(data.mileage);
 
 // Or, you can use the `Promise` API.
-getMileage().then((response) => {
+getMileage(getMileageVars).then((response) => {
   const data = response.data;
-  console.log(data.mileages);
+  console.log(data.mileage);
 });
 ```
 
@@ -438,26 +597,32 @@ getMileage().then((response) => {
 
 ```typescript
 import { getDataConnect, executeQuery } from 'firebase/data-connect';
-import { connectorConfig, getMileageRef } from '@dataconnect/generated';
+import { connectorConfig, getMileageRef, GetMileageVariables } from '@dataconnect/generated';
 
+// The `GetMileage` query requires an argument of type `GetMileageVariables`:
+const getMileageVars: GetMileageVariables = {
+  userId: ..., 
+};
 
 // Call the `getMileageRef()` function to get a reference to the query.
-const ref = getMileageRef();
+const ref = getMileageRef(getMileageVars);
+// Variables can be defined inline as well.
+const ref = getMileageRef({ userId: ..., });
 
 // You can also pass in a `DataConnect` instance to the `QueryRef` function.
 const dataConnect = getDataConnect(connectorConfig);
-const ref = getMileageRef(dataConnect);
+const ref = getMileageRef(dataConnect, getMileageVars);
 
 // Call `executeQuery()` on the reference to execute the query.
 // You can use the `await` keyword to wait for the promise to resolve.
 const { data } = await executeQuery(ref);
 
-console.log(data.mileages);
+console.log(data.mileage);
 
 // Or, you can use the `Promise` API.
 executeQuery(ref).then((response) => {
   const data = response.data;
-  console.log(data.mileages);
+  console.log(data.mileage);
 });
 ```
 
@@ -706,221 +871,115 @@ executeMutation(ref).then((response) => {
 });
 ```
 
-## MarkRestaurantVisited
-You can execute the `MarkRestaurantVisited` mutation using the following action shortcut function, or by calling `executeMutation()` after calling the following `MutationRef` function, both of which are defined in [dataconnect-generated/index.d.ts](./index.d.ts):
+## AddVisitedRestaurant
+You can execute the `AddVisitedRestaurant` mutation using the following action shortcut function, or by calling `executeMutation()` after calling the following `MutationRef` function, both of which are defined in [dataconnect-generated/index.d.ts](./index.d.ts):
 ```typescript
-markRestaurantVisited(vars: MarkRestaurantVisitedVariables): MutationPromise<MarkRestaurantVisitedData, MarkRestaurantVisitedVariables>;
+addVisitedRestaurant(vars: AddVisitedRestaurantVariables): MutationPromise<AddVisitedRestaurantData, AddVisitedRestaurantVariables>;
 
-interface MarkRestaurantVisitedRef {
+interface AddVisitedRestaurantRef {
   ...
   /* Allow users to create refs without passing in DataConnect */
-  (vars: MarkRestaurantVisitedVariables): MutationRef<MarkRestaurantVisitedData, MarkRestaurantVisitedVariables>;
+  (vars: AddVisitedRestaurantVariables): MutationRef<AddVisitedRestaurantData, AddVisitedRestaurantVariables>;
 }
-export const markRestaurantVisitedRef: MarkRestaurantVisitedRef;
+export const addVisitedRestaurantRef: AddVisitedRestaurantRef;
 ```
 You can also pass in a `DataConnect` instance to the action shortcut function or `MutationRef` function.
 ```typescript
-markRestaurantVisited(dc: DataConnect, vars: MarkRestaurantVisitedVariables): MutationPromise<MarkRestaurantVisitedData, MarkRestaurantVisitedVariables>;
+addVisitedRestaurant(dc: DataConnect, vars: AddVisitedRestaurantVariables): MutationPromise<AddVisitedRestaurantData, AddVisitedRestaurantVariables>;
 
-interface MarkRestaurantVisitedRef {
+interface AddVisitedRestaurantRef {
   ...
-  (dc: DataConnect, vars: MarkRestaurantVisitedVariables): MutationRef<MarkRestaurantVisitedData, MarkRestaurantVisitedVariables>;
+  (dc: DataConnect, vars: AddVisitedRestaurantVariables): MutationRef<AddVisitedRestaurantData, AddVisitedRestaurantVariables>;
 }
-export const markRestaurantVisitedRef: MarkRestaurantVisitedRef;
+export const addVisitedRestaurantRef: AddVisitedRestaurantRef;
 ```
 
-If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the markRestaurantVisitedRef:
+If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the addVisitedRestaurantRef:
 ```typescript
-const name = markRestaurantVisitedRef.operationName;
+const name = addVisitedRestaurantRef.operationName;
 console.log(name);
 ```
 
 ### Variables
-The `MarkRestaurantVisited` mutation requires an argument of type `MarkRestaurantVisitedVariables`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+The `AddVisitedRestaurant` mutation requires an argument of type `AddVisitedRestaurantVariables`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
 
 ```typescript
-export interface MarkRestaurantVisitedVariables {
-  id: UUIDString;
+export interface AddVisitedRestaurantVariables {
+  name: string;
+  cuisine: string;
 }
 ```
 ### Return Type
-Recall that executing the `MarkRestaurantVisited` mutation returns a `MutationPromise` that resolves to an object with a `data` property.
+Recall that executing the `AddVisitedRestaurant` mutation returns a `MutationPromise` that resolves to an object with a `data` property.
 
-The `data` property is an object of type `MarkRestaurantVisitedData`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+The `data` property is an object of type `AddVisitedRestaurantData`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
 ```typescript
-export interface MarkRestaurantVisitedData {
-  restaurant_update?: Restaurant_Key | null;
+export interface AddVisitedRestaurantData {
+  visitedRestaurant_insert: VisitedRestaurant_Key;
 }
 ```
-### Using `MarkRestaurantVisited`'s action shortcut function
+### Using `AddVisitedRestaurant`'s action shortcut function
 
 ```typescript
 import { getDataConnect } from 'firebase/data-connect';
-import { connectorConfig, markRestaurantVisited, MarkRestaurantVisitedVariables } from '@dataconnect/generated';
+import { connectorConfig, addVisitedRestaurant, AddVisitedRestaurantVariables } from '@dataconnect/generated';
 
-// The `MarkRestaurantVisited` mutation requires an argument of type `MarkRestaurantVisitedVariables`:
-const markRestaurantVisitedVars: MarkRestaurantVisitedVariables = {
-  id: ..., 
+// The `AddVisitedRestaurant` mutation requires an argument of type `AddVisitedRestaurantVariables`:
+const addVisitedRestaurantVars: AddVisitedRestaurantVariables = {
+  name: ..., 
+  cuisine: ..., 
 };
 
-// Call the `markRestaurantVisited()` function to execute the mutation.
+// Call the `addVisitedRestaurant()` function to execute the mutation.
 // You can use the `await` keyword to wait for the promise to resolve.
-const { data } = await markRestaurantVisited(markRestaurantVisitedVars);
+const { data } = await addVisitedRestaurant(addVisitedRestaurantVars);
 // Variables can be defined inline as well.
-const { data } = await markRestaurantVisited({ id: ..., });
+const { data } = await addVisitedRestaurant({ name: ..., cuisine: ..., });
 
 // You can also pass in a `DataConnect` instance to the action shortcut function.
 const dataConnect = getDataConnect(connectorConfig);
-const { data } = await markRestaurantVisited(dataConnect, markRestaurantVisitedVars);
+const { data } = await addVisitedRestaurant(dataConnect, addVisitedRestaurantVars);
 
-console.log(data.restaurant_update);
+console.log(data.visitedRestaurant_insert);
 
 // Or, you can use the `Promise` API.
-markRestaurantVisited(markRestaurantVisitedVars).then((response) => {
+addVisitedRestaurant(addVisitedRestaurantVars).then((response) => {
   const data = response.data;
-  console.log(data.restaurant_update);
+  console.log(data.visitedRestaurant_insert);
 });
 ```
 
-### Using `MarkRestaurantVisited`'s `MutationRef` function
+### Using `AddVisitedRestaurant`'s `MutationRef` function
 
 ```typescript
 import { getDataConnect, executeMutation } from 'firebase/data-connect';
-import { connectorConfig, markRestaurantVisitedRef, MarkRestaurantVisitedVariables } from '@dataconnect/generated';
+import { connectorConfig, addVisitedRestaurantRef, AddVisitedRestaurantVariables } from '@dataconnect/generated';
 
-// The `MarkRestaurantVisited` mutation requires an argument of type `MarkRestaurantVisitedVariables`:
-const markRestaurantVisitedVars: MarkRestaurantVisitedVariables = {
-  id: ..., 
+// The `AddVisitedRestaurant` mutation requires an argument of type `AddVisitedRestaurantVariables`:
+const addVisitedRestaurantVars: AddVisitedRestaurantVariables = {
+  name: ..., 
+  cuisine: ..., 
 };
 
-// Call the `markRestaurantVisitedRef()` function to get a reference to the mutation.
-const ref = markRestaurantVisitedRef(markRestaurantVisitedVars);
+// Call the `addVisitedRestaurantRef()` function to get a reference to the mutation.
+const ref = addVisitedRestaurantRef(addVisitedRestaurantVars);
 // Variables can be defined inline as well.
-const ref = markRestaurantVisitedRef({ id: ..., });
+const ref = addVisitedRestaurantRef({ name: ..., cuisine: ..., });
 
 // You can also pass in a `DataConnect` instance to the `MutationRef` function.
 const dataConnect = getDataConnect(connectorConfig);
-const ref = markRestaurantVisitedRef(dataConnect, markRestaurantVisitedVars);
+const ref = addVisitedRestaurantRef(dataConnect, addVisitedRestaurantVars);
 
 // Call `executeMutation()` on the reference to execute the mutation.
 // You can use the `await` keyword to wait for the promise to resolve.
 const { data } = await executeMutation(ref);
 
-console.log(data.restaurant_update);
+console.log(data.visitedRestaurant_insert);
 
 // Or, you can use the `Promise` API.
 executeMutation(ref).then((response) => {
   const data = response.data;
-  console.log(data.restaurant_update);
-});
-```
-
-## UnmarkRestaurantVisited
-You can execute the `UnmarkRestaurantVisited` mutation using the following action shortcut function, or by calling `executeMutation()` after calling the following `MutationRef` function, both of which are defined in [dataconnect-generated/index.d.ts](./index.d.ts):
-```typescript
-unmarkRestaurantVisited(vars: UnmarkRestaurantVisitedVariables): MutationPromise<UnmarkRestaurantVisitedData, UnmarkRestaurantVisitedVariables>;
-
-interface UnmarkRestaurantVisitedRef {
-  ...
-  /* Allow users to create refs without passing in DataConnect */
-  (vars: UnmarkRestaurantVisitedVariables): MutationRef<UnmarkRestaurantVisitedData, UnmarkRestaurantVisitedVariables>;
-}
-export const unmarkRestaurantVisitedRef: UnmarkRestaurantVisitedRef;
-```
-You can also pass in a `DataConnect` instance to the action shortcut function or `MutationRef` function.
-```typescript
-unmarkRestaurantVisited(dc: DataConnect, vars: UnmarkRestaurantVisitedVariables): MutationPromise<UnmarkRestaurantVisitedData, UnmarkRestaurantVisitedVariables>;
-
-interface UnmarkRestaurantVisitedRef {
-  ...
-  (dc: DataConnect, vars: UnmarkRestaurantVisitedVariables): MutationRef<UnmarkRestaurantVisitedData, UnmarkRestaurantVisitedVariables>;
-}
-export const unmarkRestaurantVisitedRef: UnmarkRestaurantVisitedRef;
-```
-
-If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the unmarkRestaurantVisitedRef:
-```typescript
-const name = unmarkRestaurantVisitedRef.operationName;
-console.log(name);
-```
-
-### Variables
-The `UnmarkRestaurantVisited` mutation requires an argument of type `UnmarkRestaurantVisitedVariables`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
-
-```typescript
-export interface UnmarkRestaurantVisitedVariables {
-  id: UUIDString;
-}
-```
-### Return Type
-Recall that executing the `UnmarkRestaurantVisited` mutation returns a `MutationPromise` that resolves to an object with a `data` property.
-
-The `data` property is an object of type `UnmarkRestaurantVisitedData`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
-```typescript
-export interface UnmarkRestaurantVisitedData {
-  restaurant_update?: Restaurant_Key | null;
-}
-```
-### Using `UnmarkRestaurantVisited`'s action shortcut function
-
-```typescript
-import { getDataConnect } from 'firebase/data-connect';
-import { connectorConfig, unmarkRestaurantVisited, UnmarkRestaurantVisitedVariables } from '@dataconnect/generated';
-
-// The `UnmarkRestaurantVisited` mutation requires an argument of type `UnmarkRestaurantVisitedVariables`:
-const unmarkRestaurantVisitedVars: UnmarkRestaurantVisitedVariables = {
-  id: ..., 
-};
-
-// Call the `unmarkRestaurantVisited()` function to execute the mutation.
-// You can use the `await` keyword to wait for the promise to resolve.
-const { data } = await unmarkRestaurantVisited(unmarkRestaurantVisitedVars);
-// Variables can be defined inline as well.
-const { data } = await unmarkRestaurantVisited({ id: ..., });
-
-// You can also pass in a `DataConnect` instance to the action shortcut function.
-const dataConnect = getDataConnect(connectorConfig);
-const { data } = await unmarkRestaurantVisited(dataConnect, unmarkRestaurantVisitedVars);
-
-console.log(data.restaurant_update);
-
-// Or, you can use the `Promise` API.
-unmarkRestaurantVisited(unmarkRestaurantVisitedVars).then((response) => {
-  const data = response.data;
-  console.log(data.restaurant_update);
-});
-```
-
-### Using `UnmarkRestaurantVisited`'s `MutationRef` function
-
-```typescript
-import { getDataConnect, executeMutation } from 'firebase/data-connect';
-import { connectorConfig, unmarkRestaurantVisitedRef, UnmarkRestaurantVisitedVariables } from '@dataconnect/generated';
-
-// The `UnmarkRestaurantVisited` mutation requires an argument of type `UnmarkRestaurantVisitedVariables`:
-const unmarkRestaurantVisitedVars: UnmarkRestaurantVisitedVariables = {
-  id: ..., 
-};
-
-// Call the `unmarkRestaurantVisitedRef()` function to get a reference to the mutation.
-const ref = unmarkRestaurantVisitedRef(unmarkRestaurantVisitedVars);
-// Variables can be defined inline as well.
-const ref = unmarkRestaurantVisitedRef({ id: ..., });
-
-// You can also pass in a `DataConnect` instance to the `MutationRef` function.
-const dataConnect = getDataConnect(connectorConfig);
-const ref = unmarkRestaurantVisitedRef(dataConnect, unmarkRestaurantVisitedVars);
-
-// Call `executeMutation()` on the reference to execute the mutation.
-// You can use the `await` keyword to wait for the promise to resolve.
-const { data } = await executeMutation(ref);
-
-console.log(data.restaurant_update);
-
-// Or, you can use the `Promise` API.
-executeMutation(ref).then((response) => {
-  const data = response.data;
-  console.log(data.restaurant_update);
+  console.log(data.visitedRestaurant_insert);
 });
 ```
 
@@ -1067,7 +1126,7 @@ The `UpdateMileageAfterRun` mutation requires an argument of type `UpdateMileage
 
 ```typescript
 export interface UpdateMileageAfterRunVariables {
-  id: UUIDString;
+  userId: string;
   netMiles: number;
 }
 ```
@@ -1088,7 +1147,7 @@ import { connectorConfig, updateMileageAfterRun, UpdateMileageAfterRunVariables 
 
 // The `UpdateMileageAfterRun` mutation requires an argument of type `UpdateMileageAfterRunVariables`:
 const updateMileageAfterRunVars: UpdateMileageAfterRunVariables = {
-  id: ..., 
+  userId: ..., 
   netMiles: ..., 
 };
 
@@ -1096,7 +1155,7 @@ const updateMileageAfterRunVars: UpdateMileageAfterRunVariables = {
 // You can use the `await` keyword to wait for the promise to resolve.
 const { data } = await updateMileageAfterRun(updateMileageAfterRunVars);
 // Variables can be defined inline as well.
-const { data } = await updateMileageAfterRun({ id: ..., netMiles: ..., });
+const { data } = await updateMileageAfterRun({ userId: ..., netMiles: ..., });
 
 // You can also pass in a `DataConnect` instance to the action shortcut function.
 const dataConnect = getDataConnect(connectorConfig);
@@ -1119,14 +1178,14 @@ import { connectorConfig, updateMileageAfterRunRef, UpdateMileageAfterRunVariabl
 
 // The `UpdateMileageAfterRun` mutation requires an argument of type `UpdateMileageAfterRunVariables`:
 const updateMileageAfterRunVars: UpdateMileageAfterRunVariables = {
-  id: ..., 
+  userId: ..., 
   netMiles: ..., 
 };
 
 // Call the `updateMileageAfterRunRef()` function to get a reference to the mutation.
 const ref = updateMileageAfterRunRef(updateMileageAfterRunVars);
 // Variables can be defined inline as well.
-const ref = updateMileageAfterRunRef({ id: ..., netMiles: ..., });
+const ref = updateMileageAfterRunRef({ userId: ..., netMiles: ..., });
 
 // You can also pass in a `DataConnect` instance to the `MutationRef` function.
 const dataConnect = getDataConnect(connectorConfig);
@@ -1294,6 +1353,7 @@ export interface DeleteAllDataData {
   run_deleteMany: number;
   restaurant_deleteMany: number;
   mileage_deleteMany: number;
+  visitedRestaurant_deleteMany: number;
 }
 ```
 ### Using `DeleteAllData`'s action shortcut function
@@ -1314,6 +1374,7 @@ const { data } = await deleteAllData(dataConnect);
 console.log(data.run_deleteMany);
 console.log(data.restaurant_deleteMany);
 console.log(data.mileage_deleteMany);
+console.log(data.visitedRestaurant_deleteMany);
 
 // Or, you can use the `Promise` API.
 deleteAllData().then((response) => {
@@ -1321,6 +1382,7 @@ deleteAllData().then((response) => {
   console.log(data.run_deleteMany);
   console.log(data.restaurant_deleteMany);
   console.log(data.mileage_deleteMany);
+  console.log(data.visitedRestaurant_deleteMany);
 });
 ```
 
@@ -1345,6 +1407,7 @@ const { data } = await executeMutation(ref);
 console.log(data.run_deleteMany);
 console.log(data.restaurant_deleteMany);
 console.log(data.mileage_deleteMany);
+console.log(data.visitedRestaurant_deleteMany);
 
 // Or, you can use the `Promise` API.
 executeMutation(ref).then((response) => {
@@ -1352,6 +1415,7 @@ executeMutation(ref).then((response) => {
   console.log(data.run_deleteMany);
   console.log(data.restaurant_deleteMany);
   console.log(data.mileage_deleteMany);
+  console.log(data.visitedRestaurant_deleteMany);
 });
 ```
 

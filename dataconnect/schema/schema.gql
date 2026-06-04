@@ -1,6 +1,7 @@
 # 1. The Run Table (Deposits miles)
 type Run @table(name: "run", key: "id") {
   id: UUID! @default(expr: "uuidV4()")
+  userId: String! 
   date: Date!
   distanceMiles: Float!
   durationMinutes: Int!
@@ -12,11 +13,18 @@ type Restaurant @table(name: "restaurant", key: "id") {
   name: String!
   cuisine: String!
   milesRequired: Float!
-  isVisited: Boolean! @default(value: false)
+}
+
+type VisitedRestaurant @table(name: "visited_restaurant", key: "id") {
+  id: UUID! @default(expr: "uuidV4()")
+  userId: String!
+  name: String!
+  cuisine: String!
+  visitedAt: Date! @default(expr: "request.time")
 }
 
 #3. Table that Tracks Current Mileage
-type Mileage @table(name: "mileage", key: "id") {
-  id: UUID! @default(expr: "uuidV4()")
+type Mileage @table(name: "mileage", key: "userId") {
+  userId: String! 
   netMiles: Float! @default(value: 0)
 }

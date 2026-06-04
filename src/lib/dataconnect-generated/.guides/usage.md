@@ -14,20 +14,23 @@ If a user is not using a supported framework, they can use the generated SDK dir
 Here's an example of how to use it with the first 5 operations:
 
 ```js
-import { getAllRuns, getAllRestaurants, getAllRunsAndRestaurants, getMileage, addRun, addRestaurant, markRestaurantVisited, unmarkRestaurantVisited, deleteRestaurant, updateMileageAfterRun } from '@dataconnect/generated';
+import { getAllRuns, getAllRestaurants, getAllRunsAndRestaurants, getVisitedRestaurants, getMileage, addRun, addRestaurant, addVisitedRestaurant, deleteRestaurant, updateMileageAfterRun } from '@dataconnect/generated';
 
 
-// Operation GetAllRuns: 
-const { data } = await GetAllRuns(dataConnect);
+// Operation GetAllRuns:  For variables, look at type GetAllRunsVars in ../index.d.ts
+const { data } = await GetAllRuns(dataConnect, getAllRunsVars);
 
 // Operation GetAllRestaurants: 
 const { data } = await GetAllRestaurants(dataConnect);
 
-// Operation GetAllRunsAndRestaurants: 
-const { data } = await GetAllRunsAndRestaurants(dataConnect);
+// Operation GetAllRunsAndRestaurants:  For variables, look at type GetAllRunsAndRestaurantsVars in ../index.d.ts
+const { data } = await GetAllRunsAndRestaurants(dataConnect, getAllRunsAndRestaurantsVars);
 
-// Operation GetMileage: 
-const { data } = await GetMileage(dataConnect);
+// Operation GetVisitedRestaurants:  For variables, look at type GetVisitedRestaurantsVars in ../index.d.ts
+const { data } = await GetVisitedRestaurants(dataConnect, getVisitedRestaurantsVars);
+
+// Operation GetMileage:  For variables, look at type GetMileageVars in ../index.d.ts
+const { data } = await GetMileage(dataConnect, getMileageVars);
 
 // Operation AddRun:  For variables, look at type AddRunVars in ../index.d.ts
 const { data } = await AddRun(dataConnect, addRunVars);
@@ -35,11 +38,8 @@ const { data } = await AddRun(dataConnect, addRunVars);
 // Operation AddRestaurant:  For variables, look at type AddRestaurantVars in ../index.d.ts
 const { data } = await AddRestaurant(dataConnect, addRestaurantVars);
 
-// Operation MarkRestaurantVisited:  For variables, look at type MarkRestaurantVisitedVars in ../index.d.ts
-const { data } = await MarkRestaurantVisited(dataConnect, markRestaurantVisitedVars);
-
-// Operation UnmarkRestaurantVisited:  For variables, look at type UnmarkRestaurantVisitedVars in ../index.d.ts
-const { data } = await UnmarkRestaurantVisited(dataConnect, unmarkRestaurantVisitedVars);
+// Operation AddVisitedRestaurant:  For variables, look at type AddVisitedRestaurantVars in ../index.d.ts
+const { data } = await AddVisitedRestaurant(dataConnect, addVisitedRestaurantVars);
 
 // Operation deleteRestaurant:  For variables, look at type DeleteRestaurantVars in ../index.d.ts
 const { data } = await DeleteRestaurant(dataConnect, deleteRestaurantVars);

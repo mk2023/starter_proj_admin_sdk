@@ -7,17 +7,17 @@ const connectorConfig = {
 };
 exports.connectorConfig = connectorConfig;
 
-const getAllRunsRef = (dc) => {
-  const { dc: dcInstance} = validateArgs(connectorConfig, dc, undefined);
+const getAllRunsRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
   dcInstance._useGeneratedSdk();
-  return queryRef(dcInstance, 'GetAllRuns');
+  return queryRef(dcInstance, 'GetAllRuns', inputVars);
 }
 getAllRunsRef.operationName = 'GetAllRuns';
 exports.getAllRunsRef = getAllRunsRef;
 
-exports.getAllRuns = function getAllRuns(dcOrOptions, options) {
+exports.getAllRuns = function getAllRuns(dcOrVars, varsOrOptions, options) {
   
-  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrOptions, options, undefined,false, false);
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrVars, varsOrOptions, options, true, true);
   return executeQuery(getAllRunsRef(dcInstance, inputVars), inputOpts && { fetchPolicy: inputOpts.fetchPolicy });
 }
 ;
@@ -37,32 +37,47 @@ exports.getAllRestaurants = function getAllRestaurants(dcOrOptions, options) {
 }
 ;
 
-const getAllRunsAndRestaurantsRef = (dc) => {
-  const { dc: dcInstance} = validateArgs(connectorConfig, dc, undefined);
+const getAllRunsAndRestaurantsRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
   dcInstance._useGeneratedSdk();
-  return queryRef(dcInstance, 'GetAllRunsAndRestaurants');
+  return queryRef(dcInstance, 'GetAllRunsAndRestaurants', inputVars);
 }
 getAllRunsAndRestaurantsRef.operationName = 'GetAllRunsAndRestaurants';
 exports.getAllRunsAndRestaurantsRef = getAllRunsAndRestaurantsRef;
 
-exports.getAllRunsAndRestaurants = function getAllRunsAndRestaurants(dcOrOptions, options) {
+exports.getAllRunsAndRestaurants = function getAllRunsAndRestaurants(dcOrVars, varsOrOptions, options) {
   
-  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrOptions, options, undefined,false, false);
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrVars, varsOrOptions, options, true, true);
   return executeQuery(getAllRunsAndRestaurantsRef(dcInstance, inputVars), inputOpts && { fetchPolicy: inputOpts.fetchPolicy });
 }
 ;
 
-const getMileageRef = (dc) => {
-  const { dc: dcInstance} = validateArgs(connectorConfig, dc, undefined);
+const getVisitedRestaurantsRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
   dcInstance._useGeneratedSdk();
-  return queryRef(dcInstance, 'GetMileage');
+  return queryRef(dcInstance, 'GetVisitedRestaurants', inputVars);
+}
+getVisitedRestaurantsRef.operationName = 'GetVisitedRestaurants';
+exports.getVisitedRestaurantsRef = getVisitedRestaurantsRef;
+
+exports.getVisitedRestaurants = function getVisitedRestaurants(dcOrVars, varsOrOptions, options) {
+  
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrVars, varsOrOptions, options, true, true);
+  return executeQuery(getVisitedRestaurantsRef(dcInstance, inputVars), inputOpts && { fetchPolicy: inputOpts.fetchPolicy });
+}
+;
+
+const getMileageRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return queryRef(dcInstance, 'GetMileage', inputVars);
 }
 getMileageRef.operationName = 'GetMileage';
 exports.getMileageRef = getMileageRef;
 
-exports.getMileage = function getMileage(dcOrOptions, options) {
+exports.getMileage = function getMileage(dcOrVars, varsOrOptions, options) {
   
-  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrOptions, options, undefined,false, false);
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrVars, varsOrOptions, options, true, true);
   return executeQuery(getMileageRef(dcInstance, inputVars), inputOpts && { fetchPolicy: inputOpts.fetchPolicy });
 }
 ;
@@ -95,31 +110,17 @@ exports.addRestaurant = function addRestaurant(dcOrVars, vars) {
 }
 ;
 
-const markRestaurantVisitedRef = (dcOrVars, vars) => {
+const addVisitedRestaurantRef = (dcOrVars, vars) => {
   const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
   dcInstance._useGeneratedSdk();
-  return mutationRef(dcInstance, 'MarkRestaurantVisited', inputVars);
+  return mutationRef(dcInstance, 'AddVisitedRestaurant', inputVars);
 }
-markRestaurantVisitedRef.operationName = 'MarkRestaurantVisited';
-exports.markRestaurantVisitedRef = markRestaurantVisitedRef;
+addVisitedRestaurantRef.operationName = 'AddVisitedRestaurant';
+exports.addVisitedRestaurantRef = addVisitedRestaurantRef;
 
-exports.markRestaurantVisited = function markRestaurantVisited(dcOrVars, vars) {
+exports.addVisitedRestaurant = function addVisitedRestaurant(dcOrVars, vars) {
   const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
-  return executeMutation(markRestaurantVisitedRef(dcInstance, inputVars));
-}
-;
-
-const unmarkRestaurantVisitedRef = (dcOrVars, vars) => {
-  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
-  dcInstance._useGeneratedSdk();
-  return mutationRef(dcInstance, 'UnmarkRestaurantVisited', inputVars);
-}
-unmarkRestaurantVisitedRef.operationName = 'UnmarkRestaurantVisited';
-exports.unmarkRestaurantVisitedRef = unmarkRestaurantVisitedRef;
-
-exports.unmarkRestaurantVisited = function unmarkRestaurantVisited(dcOrVars, vars) {
-  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
-  return executeMutation(unmarkRestaurantVisitedRef(dcInstance, inputVars));
+  return executeMutation(addVisitedRestaurantRef(dcInstance, inputVars));
 }
 ;
 

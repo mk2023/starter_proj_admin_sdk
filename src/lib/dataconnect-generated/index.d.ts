@@ -30,6 +30,15 @@ export interface AddRunVariables {
   durationMinutes: number;
 }
 
+export interface AddVisitedRestaurantData {
+  visitedRestaurant_insert: VisitedRestaurant_Key;
+}
+
+export interface AddVisitedRestaurantVariables {
+  name: string;
+  cuisine: string;
+}
+
 export interface CreateMileageData {
   mileage_insert: Mileage_Key;
 }
@@ -42,6 +51,7 @@ export interface DeleteAllDataData {
   run_deleteMany: number;
   restaurant_deleteMany: number;
   mileage_deleteMany: number;
+  visitedRestaurant_deleteMany: number;
 }
 
 export interface DeleteRestaurantData {
@@ -58,7 +68,6 @@ export interface GetAllRestaurantsData {
     name: string;
     cuisine: string;
     milesRequired: number;
-    isVisited: boolean;
   } & Restaurant_Key)[];
 }
 
@@ -74,8 +83,11 @@ export interface GetAllRunsAndRestaurantsData {
       name: string;
       cuisine: string;
       milesRequired: number;
-      isVisited: boolean;
     } & Restaurant_Key)[];
+}
+
+export interface GetAllRunsAndRestaurantsVariables {
+  userId: string;
 }
 
 export interface GetAllRunsData {
@@ -87,23 +99,35 @@ export interface GetAllRunsData {
   } & Run_Key)[];
 }
 
+export interface GetAllRunsVariables {
+  userId: string;
+}
+
 export interface GetMileageData {
-  mileages: ({
-    id: UUIDString;
+  mileage?: {
     netMiles: number;
-  } & Mileage_Key)[];
+  };
 }
 
-export interface MarkRestaurantVisitedData {
-  restaurant_update?: Restaurant_Key | null;
+export interface GetMileageVariables {
+  userId: string;
 }
 
-export interface MarkRestaurantVisitedVariables {
-  id: UUIDString;
+export interface GetVisitedRestaurantsData {
+  visitedRestaurants: ({
+    id: UUIDString;
+    name: string;
+    cuisine: string;
+    visitedAt: DateString;
+  } & VisitedRestaurant_Key)[];
+}
+
+export interface GetVisitedRestaurantsVariables {
+  userId: string;
 }
 
 export interface Mileage_Key {
-  id: UUIDString;
+  userId: string;
   __typename?: 'Mileage_Key';
 }
 
@@ -117,34 +141,31 @@ export interface Run_Key {
   __typename?: 'Run_Key';
 }
 
-export interface UnmarkRestaurantVisitedData {
-  restaurant_update?: Restaurant_Key | null;
-}
-
-export interface UnmarkRestaurantVisitedVariables {
-  id: UUIDString;
-}
-
 export interface UpdateMileageAfterRunData {
   mileage_update?: Mileage_Key | null;
 }
 
 export interface UpdateMileageAfterRunVariables {
-  id: UUIDString;
+  userId: string;
   netMiles: number;
+}
+
+export interface VisitedRestaurant_Key {
+  id: UUIDString;
+  __typename?: 'VisitedRestaurant_Key';
 }
 
 interface GetAllRunsRef {
   /* Allow users to create refs without passing in DataConnect */
-  (): QueryRef<GetAllRunsData, undefined>;
+  (vars: GetAllRunsVariables): QueryRef<GetAllRunsData, GetAllRunsVariables>;
   /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect): QueryRef<GetAllRunsData, undefined>;
+  (dc: DataConnect, vars: GetAllRunsVariables): QueryRef<GetAllRunsData, GetAllRunsVariables>;
   operationName: string;
 }
 export const getAllRunsRef: GetAllRunsRef;
 
-export function getAllRuns(options?: ExecuteQueryOptions): QueryPromise<GetAllRunsData, undefined>;
-export function getAllRuns(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<GetAllRunsData, undefined>;
+export function getAllRuns(vars: GetAllRunsVariables, options?: ExecuteQueryOptions): QueryPromise<GetAllRunsData, GetAllRunsVariables>;
+export function getAllRuns(dc: DataConnect, vars: GetAllRunsVariables, options?: ExecuteQueryOptions): QueryPromise<GetAllRunsData, GetAllRunsVariables>;
 
 interface GetAllRestaurantsRef {
   /* Allow users to create refs without passing in DataConnect */
@@ -160,27 +181,39 @@ export function getAllRestaurants(dc: DataConnect, options?: ExecuteQueryOptions
 
 interface GetAllRunsAndRestaurantsRef {
   /* Allow users to create refs without passing in DataConnect */
-  (): QueryRef<GetAllRunsAndRestaurantsData, undefined>;
+  (vars: GetAllRunsAndRestaurantsVariables): QueryRef<GetAllRunsAndRestaurantsData, GetAllRunsAndRestaurantsVariables>;
   /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect): QueryRef<GetAllRunsAndRestaurantsData, undefined>;
+  (dc: DataConnect, vars: GetAllRunsAndRestaurantsVariables): QueryRef<GetAllRunsAndRestaurantsData, GetAllRunsAndRestaurantsVariables>;
   operationName: string;
 }
 export const getAllRunsAndRestaurantsRef: GetAllRunsAndRestaurantsRef;
 
-export function getAllRunsAndRestaurants(options?: ExecuteQueryOptions): QueryPromise<GetAllRunsAndRestaurantsData, undefined>;
-export function getAllRunsAndRestaurants(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<GetAllRunsAndRestaurantsData, undefined>;
+export function getAllRunsAndRestaurants(vars: GetAllRunsAndRestaurantsVariables, options?: ExecuteQueryOptions): QueryPromise<GetAllRunsAndRestaurantsData, GetAllRunsAndRestaurantsVariables>;
+export function getAllRunsAndRestaurants(dc: DataConnect, vars: GetAllRunsAndRestaurantsVariables, options?: ExecuteQueryOptions): QueryPromise<GetAllRunsAndRestaurantsData, GetAllRunsAndRestaurantsVariables>;
+
+interface GetVisitedRestaurantsRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: GetVisitedRestaurantsVariables): QueryRef<GetVisitedRestaurantsData, GetVisitedRestaurantsVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: GetVisitedRestaurantsVariables): QueryRef<GetVisitedRestaurantsData, GetVisitedRestaurantsVariables>;
+  operationName: string;
+}
+export const getVisitedRestaurantsRef: GetVisitedRestaurantsRef;
+
+export function getVisitedRestaurants(vars: GetVisitedRestaurantsVariables, options?: ExecuteQueryOptions): QueryPromise<GetVisitedRestaurantsData, GetVisitedRestaurantsVariables>;
+export function getVisitedRestaurants(dc: DataConnect, vars: GetVisitedRestaurantsVariables, options?: ExecuteQueryOptions): QueryPromise<GetVisitedRestaurantsData, GetVisitedRestaurantsVariables>;
 
 interface GetMileageRef {
   /* Allow users to create refs without passing in DataConnect */
-  (): QueryRef<GetMileageData, undefined>;
+  (vars: GetMileageVariables): QueryRef<GetMileageData, GetMileageVariables>;
   /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect): QueryRef<GetMileageData, undefined>;
+  (dc: DataConnect, vars: GetMileageVariables): QueryRef<GetMileageData, GetMileageVariables>;
   operationName: string;
 }
 export const getMileageRef: GetMileageRef;
 
-export function getMileage(options?: ExecuteQueryOptions): QueryPromise<GetMileageData, undefined>;
-export function getMileage(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<GetMileageData, undefined>;
+export function getMileage(vars: GetMileageVariables, options?: ExecuteQueryOptions): QueryPromise<GetMileageData, GetMileageVariables>;
+export function getMileage(dc: DataConnect, vars: GetMileageVariables, options?: ExecuteQueryOptions): QueryPromise<GetMileageData, GetMileageVariables>;
 
 interface AddRunRef {
   /* Allow users to create refs without passing in DataConnect */
@@ -206,29 +239,17 @@ export const addRestaurantRef: AddRestaurantRef;
 export function addRestaurant(vars: AddRestaurantVariables): MutationPromise<AddRestaurantData, AddRestaurantVariables>;
 export function addRestaurant(dc: DataConnect, vars: AddRestaurantVariables): MutationPromise<AddRestaurantData, AddRestaurantVariables>;
 
-interface MarkRestaurantVisitedRef {
+interface AddVisitedRestaurantRef {
   /* Allow users to create refs without passing in DataConnect */
-  (vars: MarkRestaurantVisitedVariables): MutationRef<MarkRestaurantVisitedData, MarkRestaurantVisitedVariables>;
+  (vars: AddVisitedRestaurantVariables): MutationRef<AddVisitedRestaurantData, AddVisitedRestaurantVariables>;
   /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect, vars: MarkRestaurantVisitedVariables): MutationRef<MarkRestaurantVisitedData, MarkRestaurantVisitedVariables>;
+  (dc: DataConnect, vars: AddVisitedRestaurantVariables): MutationRef<AddVisitedRestaurantData, AddVisitedRestaurantVariables>;
   operationName: string;
 }
-export const markRestaurantVisitedRef: MarkRestaurantVisitedRef;
+export const addVisitedRestaurantRef: AddVisitedRestaurantRef;
 
-export function markRestaurantVisited(vars: MarkRestaurantVisitedVariables): MutationPromise<MarkRestaurantVisitedData, MarkRestaurantVisitedVariables>;
-export function markRestaurantVisited(dc: DataConnect, vars: MarkRestaurantVisitedVariables): MutationPromise<MarkRestaurantVisitedData, MarkRestaurantVisitedVariables>;
-
-interface UnmarkRestaurantVisitedRef {
-  /* Allow users to create refs without passing in DataConnect */
-  (vars: UnmarkRestaurantVisitedVariables): MutationRef<UnmarkRestaurantVisitedData, UnmarkRestaurantVisitedVariables>;
-  /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect, vars: UnmarkRestaurantVisitedVariables): MutationRef<UnmarkRestaurantVisitedData, UnmarkRestaurantVisitedVariables>;
-  operationName: string;
-}
-export const unmarkRestaurantVisitedRef: UnmarkRestaurantVisitedRef;
-
-export function unmarkRestaurantVisited(vars: UnmarkRestaurantVisitedVariables): MutationPromise<UnmarkRestaurantVisitedData, UnmarkRestaurantVisitedVariables>;
-export function unmarkRestaurantVisited(dc: DataConnect, vars: UnmarkRestaurantVisitedVariables): MutationPromise<UnmarkRestaurantVisitedData, UnmarkRestaurantVisitedVariables>;
+export function addVisitedRestaurant(vars: AddVisitedRestaurantVariables): MutationPromise<AddVisitedRestaurantData, AddVisitedRestaurantVariables>;
+export function addVisitedRestaurant(dc: DataConnect, vars: AddVisitedRestaurantVariables): MutationPromise<AddVisitedRestaurantData, AddVisitedRestaurantVariables>;
 
 interface DeleteRestaurantRef {
   /* Allow users to create refs without passing in DataConnect */

@@ -1,6 +1,6 @@
 # Fetching all runs to get total mileage
-query GetAllRuns @auth(level: PUBLIC) {
-  runs(orderBy: [{date: DESC}]) {
+query GetAllRuns($userId: String!) @auth(expr: "auth.uid == userId") {
+  runs(where: {userId: {eq: $userId}}, orderBy: [{date: DESC}]) {
     id
     date
     distanceMiles
@@ -9,18 +9,17 @@ query GetAllRuns @auth(level: PUBLIC) {
 }
 
 # Fetching all restaurants for display 
-query GetAllRestaurants @auth(level: PUBLIC) {
+query GetAllRestaurants @auth(level: USER) {
   restaurants(orderBy: [{milesRequired: DESC}]) {
     id
     name
     cuisine
     milesRequired
-    isVisited
   }
 }
 
-query GetAllRunsAndRestaurants @auth( level: PUBLIC){
-  runs(orderBy: [{date: DESC}]) {
+query GetAllRunsAndRestaurants($userId: String!) @auth(expr: "auth.uid == userId") {
+  runs(where: {userId: {eq: $userId}}, orderBy: [{date: DESC}]) {
     id
     date
     distanceMiles
@@ -31,29 +30,35 @@ query GetAllRunsAndRestaurants @auth( level: PUBLIC){
     name
     cuisine
     milesRequired
-    isVisited
+  }
+}
+query GetVisitedRestaurants($userId: String!) @auth(expr: "auth.uid == userId") {
+  visitedRestaurants(where: {userId: {eq: $userId}}, orderBy: [{visitedAt: DESC}]) {
+    id
+    name
+    cuisine
+    visitedAt
   }
 }
 
-query GetMileage @auth( level: PUBLIC){
-  mileages {
-    id
+query GetMileage($userId: String!) @auth(expr: "auth.uid == userId") {
+  mileage(key: {userId: $userId}) {
     netMiles
   }
 }
-
 ##MUTATIONS
 
 #Creating a new run entry
-mutation AddRun($date: Date!, $distanceMiles: Float!, $durationMinutes: Int!) @auth( level: PUBLIC) {
-  run_insert(data:{
+mutation AddRun($date: Date!, $distanceMiles: Float!, $durationMinutes: Int!) @auth( level: USER) {
+  run_insert(data: {
+    userId_expr: "auth.uid"
     date: $date
     distanceMiles: $distanceMiles 
     durationMinutes: $durationMinutes
 })
 }
 #creating a new restaurant entry
-mutation AddRestaurant($name: String!, $cuisine: String!, $milesRequired: Float!) @auth( level: PUBLIC){
+mutation AddRestaurant($name: String!, $cuisine: String!, $milesRequired: Float!) @auth( level: NO_ACCESS){
   restaurant_insert(data:{
     name: $name
     cuisine: $cuisine
@@ -61,39 +66,40 @@ mutation AddRestaurant($name: String!, $cuisine: String!, $milesRequired: Float!
     ##isVisited will default to false
 })
 }
-# Marking a restaurant as visited
-mutation MarkRestaurantVisited($id: UUID!) @auth( level: PUBLIC){
-  restaurant_update(id: $id, data:{
-    isVisited: true
+
+#Adding a visited restaurant entry (when a user marks a restaurant as visited)
+mutation AddVisitedRestaurant($name: String!, $cuisine: String!) @auth( level: USER){
+  visitedRestaurant_insert(data:{
+    userId_expr: "auth.uid"
+    name: $name
+    cuisine: $cuisine
+    ##visitedAt will default to current timestamp
 })
 }
-# Marking a restaurant as not visited
-mutation UnmarkRestaurantVisited($id: UUID!) @auth( level: PUBLIC){
-  restaurant_update(id: $id, data: {
-    isVisited: false
-  })
-}
 
-mutation deleteRestaurant($id: UUID!) @auth( level: PUBLIC){
+mutation deleteRestaurant($id: UUID!) @auth( level: NO_ACCESS){
   restaurant_delete(id: $id)
 }
 
 ## Updating mileage after a run is added
-mutation UpdateMileageAfterRun($id: UUID!, $netMiles: Float!) @auth( level: PUBLIC){
-  mileage_update(id: $id, data: {
+mutation UpdateMileageAfterRun($userId: String!, $netMiles: Float!) @auth(expr: "auth.uid == userId") {
+  mileage_update(key: {userId: $userId}, data: {
     netMiles: $netMiles
   })
 } 
 
 ## Setting a mileage (at the start up execution):
-
-mutation CreateMileage($netMiles: Float!) @auth( level: PUBLIC){
-  mileage_insert(data: { netMiles: $netMiles })
+mutation CreateMileage($netMiles: Float!) @auth( level: USER){
+  mileage_insert(data: { 
+    userId_expr: "auth.uid"
+    netMiles: $netMiles 
+    })
 }
 
 # Delete all data from all tables
-mutation DeleteAllData @auth(level: PUBLIC) {
+mutation DeleteAllData @auth(level: USER) {
   run_deleteMany(all: true)
   restaurant_deleteMany(all: true)
   mileage_deleteMany(all: true)
+  visitedRestaurant_deleteMany(all: true)
 }

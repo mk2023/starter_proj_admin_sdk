@@ -17,17 +17,23 @@ It has the same format as `Run_Key`, but is only used as mutation return value.
 """
 scalar Run_KeyOutput
 """
+✨ `VisitedRestaurant_KeyOutput` returns the primary key fields of table type `VisitedRestaurant`.
+
+It has the same format as `VisitedRestaurant_Key`, but is only used as mutation return value.
+"""
+scalar VisitedRestaurant_KeyOutput
+"""
 ✨ Generated data input type for table 'Mileage'. It includes all necessary fields for creating or upserting rows into table.
 """
 input Mileage_Data {
   """
-  ✨ Generated from Field `Mileage`.`id` of type `UUID!`
+  ✨ Generated from Field `Mileage`.`userId` of type `String!`
   """
-  id: UUID
+  userId: String
   """
-  ✨ `_expr` server value variant of `id` (✨ Generated from Field `Mileage`.`id` of type `UUID!`)
+  ✨ `_expr` server value variant of `userId` (✨ Generated from Field `Mileage`.`userId` of type `String!`)
   """
-  id_expr: UUID_Expr @fdc_forbiddenInVariables
+  userId_expr: String_Expr @fdc_forbiddenInVariables
   """
   ✨ Generated from Field `Mileage`.`netMiles` of type `Float!`
   """
@@ -58,9 +64,9 @@ input Mileage_Filter {
   """
   _or: [Mileage_Filter!]
   """
-  ✨ Generated from Field `Mileage`.`id` of type `UUID!`
+  ✨ Generated from Field `Mileage`.`userId` of type `String!`
   """
-  id: UUID_Filter
+  userId: String_Filter
   """
   ✨ Generated from Field `Mileage`.`netMiles` of type `Float!`
   """
@@ -104,13 +110,13 @@ input Mileage_Having {
   """
   _count: Int_Filter
   """
-  ✨ Generated from Field `Mileage`.`id_count` of type `Int!`
-  """
-  id_count: Int_Filter
-  """
   ✨ Generated from Field `Mileage`.`netMiles_count` of type `Int!`
   """
   netMiles_count: Int_Filter
+  """
+  ✨ Generated from Field `Mileage`.`userId_count` of type `Int!`
+  """
+  userId_count: Int_Filter
   """
   ✨ Generated from Field `Mileage`.`netMiles_sum` of type `Float`
   """
@@ -133,13 +139,13 @@ input Mileage_Having {
 """
 input Mileage_Key {
   """
-  ✨ Generated from Field `Mileage`.`id` of type `UUID!`
+  ✨ Generated from Field `Mileage`.`userId` of type `String!`
   """
-  id: UUID
+  userId: String
   """
-  ✨ `_expr` server value variant of `id` (✨ Generated from Field `Mileage`.`id` of type `UUID!`)
+  ✨ `_expr` server value variant of `userId` (✨ Generated from Field `Mileage`.`userId` of type `String!`)
   """
-  id_expr: UUID_Expr @fdc_forbiddenInVariables
+  userId_expr: String_Expr @fdc_forbiddenInVariables
 }
 """
 ✨ Generated list filter input type for table 'Mileage'. This input applies filtering logic based on the count or existence of related objects that matches certain criteria.
@@ -159,9 +165,9 @@ input Mileage_ListFilter {
 """
 input Mileage_Order {
   """
-  ✨ Generated from Field `Mileage`.`id` of type `UUID!`
+  ✨ Generated from Field `Mileage`.`userId` of type `String!`
   """
-  id: OrderDirection
+  userId: OrderDirection
   """
   ✨ Generated from Field `Mileage`.`netMiles` of type `Float!`
   """
@@ -171,13 +177,13 @@ input Mileage_Order {
   """
   _count: OrderDirection
   """
-  ✨ Generated from Field `Mileage`.`id_count` of type `Int!`
-  """
-  id_count: OrderDirection
-  """
   ✨ Generated from Field `Mileage`.`netMiles_count` of type `Int!`
   """
   netMiles_count: OrderDirection
+  """
+  ✨ Generated from Field `Mileage`.`userId_count` of type `Int!`
+  """
+  userId_count: OrderDirection
   """
   ✨ Generated from Field `Mileage`.`netMiles_sum` of type `Float`
   """
@@ -215,14 +221,6 @@ input Restaurant_Data {
   ✨ `_expr` server value variant of `cuisine` (✨ Generated from Field `Restaurant`.`cuisine` of type `String!`)
   """
   cuisine_expr: String_Expr @fdc_forbiddenInVariables
-  """
-  ✨ Generated from Field `Restaurant`.`isVisited` of type `Boolean!`
-  """
-  isVisited: Boolean
-  """
-  ✨ `_expr` server value variant of `isVisited` (✨ Generated from Field `Restaurant`.`isVisited` of type `Boolean!`)
-  """
-  isVisited_expr: Boolean_Expr @fdc_forbiddenInVariables
   """
   ✨ Generated from Field `Restaurant`.`milesRequired` of type `Float!`
   """
@@ -268,10 +266,6 @@ input Restaurant_Filter {
   ✨ Generated from Field `Restaurant`.`cuisine` of type `String!`
   """
   cuisine: String_Filter
-  """
-  ✨ Generated from Field `Restaurant`.`isVisited` of type `Boolean!`
-  """
-  isVisited: Boolean_Filter
   """
   ✨ Generated from Field `Restaurant`.`milesRequired` of type `Float!`
   """
@@ -326,10 +320,6 @@ input Restaurant_Having {
   ✨ Generated from Field `Restaurant`.`id_count` of type `Int!`
   """
   id_count: Int_Filter
-  """
-  ✨ Generated from Field `Restaurant`.`isVisited_count` of type `Int!`
-  """
-  isVisited_count: Int_Filter
   """
   ✨ Generated from Field `Restaurant`.`milesRequired_count` of type `Int!`
   """
@@ -394,10 +384,6 @@ input Restaurant_Order {
   """
   cuisine: OrderDirection
   """
-  ✨ Generated from Field `Restaurant`.`isVisited` of type `Boolean!`
-  """
-  isVisited: OrderDirection
-  """
   ✨ Generated from Field `Restaurant`.`milesRequired` of type `Float!`
   """
   milesRequired: OrderDirection
@@ -417,10 +403,6 @@ input Restaurant_Order {
   ✨ Generated from Field `Restaurant`.`id_count` of type `Int!`
   """
   id_count: OrderDirection
-  """
-  ✨ Generated from Field `Restaurant`.`isVisited_count` of type `Int!`
-  """
-  isVisited_count: OrderDirection
   """
   ✨ Generated from Field `Restaurant`.`milesRequired_count` of type `Int!`
   """
@@ -498,6 +480,14 @@ input Run_Data {
   ✨ `_update` server value variant of `durationMinutes` (✨ Generated from Field `Run`.`durationMinutes` of type `Int!`)
   """
   durationMinutes_update: [Int_Update!] @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `Run`.`userId` of type `String!`
+  """
+  userId: String
+  """
+  ✨ `_expr` server value variant of `userId` (✨ Generated from Field `Run`.`userId` of type `String!`)
+  """
+  userId_expr: String_Expr @fdc_forbiddenInVariables
 }
 """
 ✨ Generated filter input type for table 'Run'. This input allows filtering objects using various conditions. Use `_or`, `_and`, and `_not` to compose complex filters.
@@ -531,6 +521,10 @@ input Run_Filter {
   ✨ Generated from Field `Run`.`durationMinutes` of type `Int!`
   """
   durationMinutes: Int_Filter
+  """
+  ✨ Generated from Field `Run`.`userId` of type `String!`
+  """
+  userId: String_Filter
 }
 """
 ✨ Generated first-row input type for table 'Run'. This input selects the first row matching the filter criteria, ordered according to the specified conditions.
@@ -585,6 +579,10 @@ input Run_Having {
   ✨ Generated from Field `Run`.`id_count` of type `Int!`
   """
   id_count: Int_Filter
+  """
+  ✨ Generated from Field `Run`.`userId_count` of type `Int!`
+  """
+  userId_count: Int_Filter
   """
   ✨ Generated from Field `Run`.`distanceMiles_sum` of type `Float`
   """
@@ -673,6 +671,10 @@ input Run_Order {
   """
   durationMinutes: OrderDirection
   """
+  ✨ Generated from Field `Run`.`userId` of type `String!`
+  """
+  userId: OrderDirection
+  """
   ✨ Generated from Field `Run`.`_count` of type `Int!`
   """
   _count: OrderDirection
@@ -692,6 +694,10 @@ input Run_Order {
   ✨ Generated from Field `Run`.`id_count` of type `Int!`
   """
   id_count: OrderDirection
+  """
+  ✨ Generated from Field `Run`.`userId_count` of type `Int!`
+  """
+  userId_count: OrderDirection
   """
   ✨ Generated from Field `Run`.`distanceMiles_sum` of type `Float`
   """
@@ -732,4 +738,243 @@ input Run_Order {
   ✨ Generated from Field `Run`.`durationMinutes_max` of type `Int`
   """
   durationMinutes_max: OrderDirection
+}
+"""
+✨ Generated data input type for table 'VisitedRestaurant'. It includes all necessary fields for creating or upserting rows into table.
+"""
+input VisitedRestaurant_Data {
+  """
+  ✨ Generated from Field `VisitedRestaurant`.`id` of type `UUID!`
+  """
+  id: UUID
+  """
+  ✨ `_expr` server value variant of `id` (✨ Generated from Field `VisitedRestaurant`.`id` of type `UUID!`)
+  """
+  id_expr: UUID_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `VisitedRestaurant`.`cuisine` of type `String!`
+  """
+  cuisine: String
+  """
+  ✨ `_expr` server value variant of `cuisine` (✨ Generated from Field `VisitedRestaurant`.`cuisine` of type `String!`)
+  """
+  cuisine_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `VisitedRestaurant`.`name` of type `String!`
+  """
+  name: String
+  """
+  ✨ `_expr` server value variant of `name` (✨ Generated from Field `VisitedRestaurant`.`name` of type `String!`)
+  """
+  name_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `VisitedRestaurant`.`userId` of type `String!`
+  """
+  userId: String
+  """
+  ✨ `_expr` server value variant of `userId` (✨ Generated from Field `VisitedRestaurant`.`userId` of type `String!`)
+  """
+  userId_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `VisitedRestaurant`.`visitedAt` of type `Date!`
+  """
+  visitedAt: Date
+  """
+  ✨ `_date` server value variant of `visitedAt` (✨ Generated from Field `VisitedRestaurant`.`visitedAt` of type `Date!`)
+  """
+  visitedAt_date: Date_Relative @fdc_forbiddenInVariables
+  """
+  ✨ `_expr` server value variant of `visitedAt` (✨ Generated from Field `VisitedRestaurant`.`visitedAt` of type `Date!`)
+  """
+  visitedAt_expr: Date_Expr @fdc_forbiddenInVariables
+  """
+  ✨ `_update` server value variant of `visitedAt` (✨ Generated from Field `VisitedRestaurant`.`visitedAt` of type `Date!`)
+  """
+  visitedAt_update: [Date_Update!] @fdc_forbiddenInVariables
+}
+"""
+✨ Generated filter input type for table 'VisitedRestaurant'. This input allows filtering objects using various conditions. Use `_or`, `_and`, and `_not` to compose complex filters.
+"""
+input VisitedRestaurant_Filter {
+  """
+  Apply multiple filter conditions using `AND` logic.
+  """
+  _and: [VisitedRestaurant_Filter!]
+  """
+  Negate the result of the provided filter condition.
+  """
+  _not: VisitedRestaurant_Filter
+  """
+  Apply multiple filter conditions using `OR` logic.
+  """
+  _or: [VisitedRestaurant_Filter!]
+  """
+  ✨ Generated from Field `VisitedRestaurant`.`id` of type `UUID!`
+  """
+  id: UUID_Filter
+  """
+  ✨ Generated from Field `VisitedRestaurant`.`cuisine` of type `String!`
+  """
+  cuisine: String_Filter
+  """
+  ✨ Generated from Field `VisitedRestaurant`.`name` of type `String!`
+  """
+  name: String_Filter
+  """
+  ✨ Generated from Field `VisitedRestaurant`.`userId` of type `String!`
+  """
+  userId: String_Filter
+  """
+  ✨ Generated from Field `VisitedRestaurant`.`visitedAt` of type `Date!`
+  """
+  visitedAt: Date_Filter
+}
+"""
+✨ Generated first-row input type for table 'VisitedRestaurant'. This input selects the first row matching the filter criteria, ordered according to the specified conditions.
+"""
+input VisitedRestaurant_FirstRow {
+  """
+  Order the result by the specified fields.
+  """
+  orderBy: [VisitedRestaurant_Order!]
+  """
+  Filters rows based on the specified conditions.
+  """
+  where: VisitedRestaurant_Filter
+}
+"""
+✨ Generated having input type for table 'VisitedRestaurant'. This input allows you to filter groups during aggregate queries using various conditions. Use `_or`, `_and`, and `_not` to compose complex filters.
+"""
+input VisitedRestaurant_Having {
+  """
+  Apply multiple Having conditions using `AND` logic.
+  """
+  _and: [VisitedRestaurant_Having!]
+  """
+  Whether to apply DISTINCT to the aggregate function.
+  """
+  _distinct: Boolean
+  """
+  Negate the result of the provided Having condition.
+  """
+  _not: VisitedRestaurant_Having
+  """
+  Apply multiple Having conditions using `OR` logic.
+  """
+  _or: [VisitedRestaurant_Having!]
+  """
+  ✨ Generated from Field `VisitedRestaurant`.`_count` of type `Int!`
+  """
+  _count: Int_Filter
+  """
+  ✨ Generated from Field `VisitedRestaurant`.`cuisine_count` of type `Int!`
+  """
+  cuisine_count: Int_Filter
+  """
+  ✨ Generated from Field `VisitedRestaurant`.`id_count` of type `Int!`
+  """
+  id_count: Int_Filter
+  """
+  ✨ Generated from Field `VisitedRestaurant`.`name_count` of type `Int!`
+  """
+  name_count: Int_Filter
+  """
+  ✨ Generated from Field `VisitedRestaurant`.`userId_count` of type `Int!`
+  """
+  userId_count: Int_Filter
+  """
+  ✨ Generated from Field `VisitedRestaurant`.`visitedAt_count` of type `Int!`
+  """
+  visitedAt_count: Int_Filter
+  """
+  ✨ Generated from Field `VisitedRestaurant`.`visitedAt_min` of type `Date`
+  """
+  visitedAt_min: Date_Filter
+  """
+  ✨ Generated from Field `VisitedRestaurant`.`visitedAt_max` of type `Date`
+  """
+  visitedAt_max: Date_Filter
+}
+"""
+✨ Generated key input type for table 'VisitedRestaurant'. It represents the primary key fields used to uniquely identify a row in the table.
+"""
+input VisitedRestaurant_Key {
+  """
+  ✨ Generated from Field `VisitedRestaurant`.`id` of type `UUID!`
+  """
+  id: UUID
+  """
+  ✨ `_expr` server value variant of `id` (✨ Generated from Field `VisitedRestaurant`.`id` of type `UUID!`)
+  """
+  id_expr: UUID_Expr @fdc_forbiddenInVariables
+}
+"""
+✨ Generated list filter input type for table 'VisitedRestaurant'. This input applies filtering logic based on the count or existence of related objects that matches certain criteria.
+"""
+input VisitedRestaurant_ListFilter {
+  """
+  The desired number of objects that match the condition (defaults to at least one).
+  """
+  count: Int_Filter = {gt:0}
+  """
+  Condition of the related objects to filter for.
+  """
+  exist: VisitedRestaurant_Filter
+}
+"""
+✨ Generated order input type for table 'VisitedRestaurant'. This input defines the sorting order of rows in query results based on one or more fields.
+"""
+input VisitedRestaurant_Order {
+  """
+  ✨ Generated from Field `VisitedRestaurant`.`id` of type `UUID!`
+  """
+  id: OrderDirection
+  """
+  ✨ Generated from Field `VisitedRestaurant`.`cuisine` of type `String!`
+  """
+  cuisine: OrderDirection
+  """
+  ✨ Generated from Field `VisitedRestaurant`.`name` of type `String!`
+  """
+  name: OrderDirection
+  """
+  ✨ Generated from Field `VisitedRestaurant`.`userId` of type `String!`
+  """
+  userId: OrderDirection
+  """
+  ✨ Generated from Field `VisitedRestaurant`.`visitedAt` of type `Date!`
+  """
+  visitedAt: OrderDirection
+  """
+  ✨ Generated from Field `VisitedRestaurant`.`_count` of type `Int!`
+  """
+  _count: OrderDirection
+  """
+  ✨ Generated from Field `VisitedRestaurant`.`cuisine_count` of type `Int!`
+  """
+  cuisine_count: OrderDirection
+  """
+  ✨ Generated from Field `VisitedRestaurant`.`id_count` of type `Int!`
+  """
+  id_count: OrderDirection
+  """
+  ✨ Generated from Field `VisitedRestaurant`.`name_count` of type `Int!`
+  """
+  name_count: OrderDirection
+  """
+  ✨ Generated from Field `VisitedRestaurant`.`userId_count` of type `Int!`
+  """
+  userId_count: OrderDirection
+  """
+  ✨ Generated from Field `VisitedRestaurant`.`visitedAt_count` of type `Int!`
+  """
+  visitedAt_count: OrderDirection
+  """
+  ✨ Generated from Field `VisitedRestaurant`.`visitedAt_min` of type `Date`
+  """
+  visitedAt_min: OrderDirection
+  """
+  ✨ Generated from Field `VisitedRestaurant`.`visitedAt_max` of type `Date`
+  """
+  visitedAt_max: OrderDirection
 }

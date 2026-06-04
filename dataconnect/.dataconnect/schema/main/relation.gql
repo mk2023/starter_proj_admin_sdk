@@ -8,15 +8,6 @@ extend type Mileage {
   """
   _count: Int! @fdc_generated(from: "Mileage.", purpose: QUERY_COUNT)
   """
-  ✨ Count the number of rows in the `Mileage` table where the `id` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
-  """
-  id_count(
-    """
-    Set to true to count the number of distinct values.
-    """
-    distinct: Boolean = false
-  ): Int! @fdc_generated(from: "Mileage.id", purpose: QUERY_COUNT)
-  """
   ✨ Count the number of rows in the `Mileage` table where the `netMiles` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
   """
   netMiles_count(
@@ -25,6 +16,15 @@ extend type Mileage {
     """
     distinct: Boolean = false
   ): Int! @fdc_generated(from: "Mileage.netMiles", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Mileage` table where the `userId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  userId_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Mileage.userId", purpose: QUERY_COUNT)
   """
   ✨ Sum the `netMiles` field in the `Mileage` table.
   """
@@ -54,7 +54,7 @@ extend type Mileage {
   """
   A generated field that is used for caching results in SDKs.
   """
-  _id: ID! @fdc_generated(from: "Mileage.id", purpose: ENTITY_ID)
+  _id: ID! @fdc_generated(from: "Mileage.userId", purpose: ENTITY_ID)
 }
 extend type Restaurant {
   """
@@ -83,15 +83,6 @@ extend type Restaurant {
     """
     distinct: Boolean = false
   ): Int! @fdc_generated(from: "Restaurant.id", purpose: QUERY_COUNT)
-  """
-  ✨ Count the number of rows in the `Restaurant` table where the `isVisited` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
-  """
-  isVisited_count(
-    """
-    Set to true to count the number of distinct values.
-    """
-    distinct: Boolean = false
-  ): Int! @fdc_generated(from: "Restaurant.isVisited", purpose: QUERY_COUNT)
   """
   ✨ Count the number of rows in the `Restaurant` table where the `milesRequired` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
   """
@@ -187,6 +178,15 @@ extend type Run {
     distinct: Boolean = false
   ): Int! @fdc_generated(from: "Run.id", purpose: QUERY_COUNT)
   """
+  ✨ Count the number of rows in the `Run` table where the `userId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  userId_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Run.userId", purpose: QUERY_COUNT)
+  """
   ✨ Sum the `distanceMiles` field in the `Run` table.
   """
   distanceMiles_sum(
@@ -250,4 +250,71 @@ extend type Run {
   A generated field that is used for caching results in SDKs.
   """
   _id: ID! @fdc_generated(from: "Run.id", purpose: ENTITY_ID)
+}
+extend type VisitedRestaurant {
+  """
+  Implicit metadata field that cannot be written. It provides extra information about query results.
+  """
+  _metadata: _Metadata @fdc_generated(from: "VisitedRestaurant", purpose: METADATA_FIELD)
+  """
+  ✨ Count the number of rows in the `VisitedRestaurant` table.
+  """
+  _count: Int! @fdc_generated(from: "VisitedRestaurant.", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `VisitedRestaurant` table where the `cuisine` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  cuisine_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "VisitedRestaurant.cuisine", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `VisitedRestaurant` table where the `id` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  id_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "VisitedRestaurant.id", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `VisitedRestaurant` table where the `name` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  name_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "VisitedRestaurant.name", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `VisitedRestaurant` table where the `userId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  userId_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "VisitedRestaurant.userId", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `VisitedRestaurant` table where the `visitedAt` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  visitedAt_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "VisitedRestaurant.visitedAt", purpose: QUERY_COUNT)
+  """
+  ✨ Minimum of the `visitedAt` field in the `VisitedRestaurant` table.
+  """
+  visitedAt_min: Date @fdc_generated(from: "VisitedRestaurant.visitedAt", purpose: QUERY_MIN)
+  """
+  ✨ Maximum of the `visitedAt` field in the `VisitedRestaurant` table.
+  """
+  visitedAt_max: Date @fdc_generated(from: "VisitedRestaurant.visitedAt", purpose: QUERY_MAX)
+  """
+  A generated field that is used for caching results in SDKs.
+  """
+  _id: ID! @fdc_generated(from: "VisitedRestaurant.id", purpose: ENTITY_ID)
 }
