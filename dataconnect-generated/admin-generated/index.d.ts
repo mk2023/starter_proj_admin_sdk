@@ -60,15 +60,6 @@ export interface DeleteRestaurantVariables {
   id: UUIDString;
 }
 
-export interface GetAllRestaurantsData {
-  restaurants: ({
-    id: UUIDString;
-    name: string;
-    cuisine: string;
-    milesRequired: number;
-  } & Restaurant_Key)[];
-}
-
 export interface GetAllRunsAndRestaurantsData {
   runs: ({
     id: UUIDString;
@@ -85,19 +76,6 @@ export interface GetAllRunsAndRestaurantsData {
 }
 
 export interface GetAllRunsAndRestaurantsVariables {
-  userId: string;
-}
-
-export interface GetAllRunsData {
-  runs: ({
-    id: UUIDString;
-    date: DateString;
-    distanceMiles: number;
-    durationMinutes: number;
-  } & Run_Key)[];
-}
-
-export interface GetAllRunsVariables {
   userId: string;
 }
 
@@ -140,7 +118,7 @@ export interface Run_Key {
 }
 
 export interface UpdateMileageAfterRunData {
-  mileage_update?: Mileage_Key | null;
+  mileage_upsert: Mileage_Key;
 }
 
 export interface UpdateMileageAfterRunVariables {
@@ -152,16 +130,6 @@ export interface VisitedRestaurant_Key {
   id: UUIDString;
   __typename?: 'VisitedRestaurant_Key';
 }
-
-/** Generated Node Admin SDK operation action function for the 'GetAllRuns' Query. Allow users to execute without passing in DataConnect. */
-export function getAllRuns(dc: DataConnect, vars: GetAllRunsVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<GetAllRunsData>>;
-/** Generated Node Admin SDK operation action function for the 'GetAllRuns' Query. Allow users to pass in custom DataConnect instances. */
-export function getAllRuns(vars: GetAllRunsVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<GetAllRunsData>>;
-
-/** Generated Node Admin SDK operation action function for the 'GetAllRestaurants' Query. Allow users to execute without passing in DataConnect. */
-export function getAllRestaurants(dc: DataConnect, options?: OperationOptions): Promise<ExecuteOperationResponse<GetAllRestaurantsData>>;
-/** Generated Node Admin SDK operation action function for the 'GetAllRestaurants' Query. Allow users to pass in custom DataConnect instances. */
-export function getAllRestaurants(options?: OperationOptions): Promise<ExecuteOperationResponse<GetAllRestaurantsData>>;
 
 /** Generated Node Admin SDK operation action function for the 'GetAllRunsAndRestaurants' Query. Allow users to execute without passing in DataConnect. */
 export function getAllRunsAndRestaurants(dc: DataConnect, vars: GetAllRunsAndRestaurantsVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<GetAllRunsAndRestaurantsData>>;

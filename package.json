@@ -8,7 +8,9 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "db:seed": "FIREBASE_DATA_CONNECT_EMULATOR_HOST=\"127.0.0.1:9399\" DATA_CONNECT_EMULATOR_HOST=\"127.0.0.1:9399\" npx tsx scripts/initial_data.ts"
+    "db:reset": "DATA_CONNECT_EMULATOR_HOST=\"127.0.0.1:9399\" /Users/minseulkim/firebase-admin-python/.venv/bin/python reset_db.py",
+    "db:seed": "DATA_CONNECT_EMULATOR_HOST=\"127.0.0.1:9399\" /Users/minseulkim/firebase-admin-python/.venv/bin/python scripts/initial_data.py",
+    "db:seed:ts": "FIREBASE_DATA_CONNECT_EMULATOR_HOST=\"127.0.0.1:9399\" DATA_CONNECT_EMULATOR_HOST=\"127.0.0.1:9399\" npx tsx scripts/initial_data.ts"
   },
   "dependencies": {
     "@dataconnect/admin-generated": "link:dataconnect-generated/admin-generated",

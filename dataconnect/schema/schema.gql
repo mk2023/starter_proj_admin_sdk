@@ -14,7 +14,7 @@ type Restaurant @table(name: "restaurant", key: "id") {
   cuisine: String!
   milesRequired: Float!
 }
-
+#3. The Visited Restaurant Table (Tracks which restaurants a user has visited)
 type VisitedRestaurant @table(name: "visited_restaurant", key: "id") {
   id: UUID! @default(expr: "uuidV4()")
   userId: String!
@@ -23,7 +23,7 @@ type VisitedRestaurant @table(name: "visited_restaurant", key: "id") {
   visitedAt: Date! @default(expr: "request.time")
 }
 
-#3. Table that Tracks Current Mileage
+#4. Table that Tracks Current Mileage
 type Mileage @table(name: "mileage", key: "userId") {
   userId: String! 
   netMiles: Float! @default(value: 0)

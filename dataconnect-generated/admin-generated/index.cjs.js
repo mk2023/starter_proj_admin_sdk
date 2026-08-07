@@ -7,20 +7,6 @@ const connectorConfig = {
 };
 exports.connectorConfig = connectorConfig;
 
-function getAllRuns(dcOrVarsOrOptions, varsOrOptions, options) {
-  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
-  dcInstance.useGen(true);
-  return dcInstance.executeQuery('GetAllRuns', inputVars, inputOpts);
-}
-exports.getAllRuns = getAllRuns;
-
-function getAllRestaurants(dcOrOptions, options) {
-  const { dc: dcInstance, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrOptions, options, undefined);
-  dcInstance.useGen(true);
-  return dcInstance.executeQuery('GetAllRestaurants', undefined, inputOpts);
-}
-exports.getAllRestaurants = getAllRestaurants;
-
 function getAllRunsAndRestaurants(dcOrVarsOrOptions, varsOrOptions, options) {
   const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
   dcInstance.useGen(true);

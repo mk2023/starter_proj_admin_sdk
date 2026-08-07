@@ -1,23 +1,3 @@
-# Fetching all runs to get total mileage
-query GetAllRuns($userId: String!) @auth(expr: "auth.uid == userId") {
-  runs(where: {userId: {eq: $userId}}, orderBy: [{date: DESC}]) {
-    id
-    date
-    distanceMiles
-    durationMinutes
-  }
-}
-
-# Fetching all restaurants for display 
-query GetAllRestaurants @auth(level: USER) {
-  restaurants(orderBy: [{milesRequired: DESC}]) {
-    id
-    name
-    cuisine
-    milesRequired
-  }
-}
-
 query GetAllRunsAndRestaurants($userId: String!) @auth(expr: "auth.uid == userId") {
   runs(where: {userId: {eq: $userId}}, orderBy: [{date: DESC}]) {
     id
@@ -32,6 +12,7 @@ query GetAllRunsAndRestaurants($userId: String!) @auth(expr: "auth.uid == userId
     milesRequired
   }
 }
+
 query GetVisitedRestaurants($userId: String!) @auth(expr: "auth.uid == userId") {
   visitedRestaurants(where: {userId: {eq: $userId}}, orderBy: [{visitedAt: DESC}]) {
     id
@@ -47,7 +28,6 @@ query GetMileage($userId: String!) @auth(expr: "auth.uid == userId") {
   }
 }
 ##MUTATIONS
-
 #Creating a new run entry
 mutation AddRun($date: Date!, $distanceMiles: Float!, $durationMinutes: Int!) @auth( level: USER) {
   run_insert(data: {
@@ -62,8 +42,7 @@ mutation AddRestaurant($name: String!, $cuisine: String!, $milesRequired: Float!
   restaurant_insert(data:{
     name: $name
     cuisine: $cuisine
-    milesRequired: $milesRequired 
-    ##isVisited will default to false
+    milesRequired: $milesRequired
 })
 }
 
@@ -83,7 +62,8 @@ mutation deleteRestaurant($id: UUID!) @auth( level: NO_ACCESS){
 
 ## Updating mileage after a run is added
 mutation UpdateMileageAfterRun($userId: String!, $netMiles: Float!) @auth(expr: "auth.uid == userId") {
-  mileage_update(key: {userId: $userId}, data: {
+  mileage_upsert(data: {
+    userId: $userId,
     netMiles: $netMiles
   })
 } 
@@ -97,7 +77,7 @@ mutation CreateMileage($netMiles: Float!) @auth( level: USER){
 }
 
 # Delete all data from all tables
-mutation DeleteAllData @auth(level: USER) {
+mutation DeleteAllData @auth(level: NO_ACCESS) {
   run_deleteMany(all: true)
   restaurant_deleteMany(all: true)
   mileage_deleteMany(all: true)

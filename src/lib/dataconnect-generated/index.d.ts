@@ -62,15 +62,6 @@ export interface DeleteRestaurantVariables {
   id: UUIDString;
 }
 
-export interface GetAllRestaurantsData {
-  restaurants: ({
-    id: UUIDString;
-    name: string;
-    cuisine: string;
-    milesRequired: number;
-  } & Restaurant_Key)[];
-}
-
 export interface GetAllRunsAndRestaurantsData {
   runs: ({
     id: UUIDString;
@@ -87,19 +78,6 @@ export interface GetAllRunsAndRestaurantsData {
 }
 
 export interface GetAllRunsAndRestaurantsVariables {
-  userId: string;
-}
-
-export interface GetAllRunsData {
-  runs: ({
-    id: UUIDString;
-    date: DateString;
-    distanceMiles: number;
-    durationMinutes: number;
-  } & Run_Key)[];
-}
-
-export interface GetAllRunsVariables {
   userId: string;
 }
 
@@ -142,7 +120,7 @@ export interface Run_Key {
 }
 
 export interface UpdateMileageAfterRunData {
-  mileage_update?: Mileage_Key | null;
+  mileage_upsert: Mileage_Key;
 }
 
 export interface UpdateMileageAfterRunVariables {
@@ -154,30 +132,6 @@ export interface VisitedRestaurant_Key {
   id: UUIDString;
   __typename?: 'VisitedRestaurant_Key';
 }
-
-interface GetAllRunsRef {
-  /* Allow users to create refs without passing in DataConnect */
-  (vars: GetAllRunsVariables): QueryRef<GetAllRunsData, GetAllRunsVariables>;
-  /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect, vars: GetAllRunsVariables): QueryRef<GetAllRunsData, GetAllRunsVariables>;
-  operationName: string;
-}
-export const getAllRunsRef: GetAllRunsRef;
-
-export function getAllRuns(vars: GetAllRunsVariables, options?: ExecuteQueryOptions): QueryPromise<GetAllRunsData, GetAllRunsVariables>;
-export function getAllRuns(dc: DataConnect, vars: GetAllRunsVariables, options?: ExecuteQueryOptions): QueryPromise<GetAllRunsData, GetAllRunsVariables>;
-
-interface GetAllRestaurantsRef {
-  /* Allow users to create refs without passing in DataConnect */
-  (): QueryRef<GetAllRestaurantsData, undefined>;
-  /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect): QueryRef<GetAllRestaurantsData, undefined>;
-  operationName: string;
-}
-export const getAllRestaurantsRef: GetAllRestaurantsRef;
-
-export function getAllRestaurants(options?: ExecuteQueryOptions): QueryPromise<GetAllRestaurantsData, undefined>;
-export function getAllRestaurants(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<GetAllRestaurantsData, undefined>;
 
 interface GetAllRunsAndRestaurantsRef {
   /* Allow users to create refs without passing in DataConnect */

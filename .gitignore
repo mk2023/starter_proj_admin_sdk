@@ -32,6 +32,8 @@ dist/
 
 # Local configuration / Emulator states
 .firebase/
+.dataconnect/
+dataconnect/.dataconnect/
 firebase-debug.log
 ui-debug.log
 

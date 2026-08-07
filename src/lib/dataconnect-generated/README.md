@@ -8,8 +8,6 @@ This README will guide you through the process of using the generated JavaScript
 - [**Accessing the connector**](#accessing-the-connector)
   - [*Connecting to the local Emulator*](#connecting-to-the-local-emulator)
 - [**Queries**](#queries)
-  - [*GetAllRuns*](#getallruns)
-  - [*GetAllRestaurants*](#getallrestaurants)
   - [*GetAllRunsAndRestaurants*](#getallrunsandrestaurants)
   - [*GetVisitedRestaurants*](#getvisitedrestaurants)
   - [*GetMileage*](#getmileage)
@@ -66,216 +64,6 @@ The following is true for both the action shortcut function and the `QueryRef` f
 - Both functions can be called with or without passing in a `DataConnect` instance as an argument. If no `DataConnect` argument is passed in, then the generated SDK will call `getDataConnect(connectorConfig)` behind the scenes for you.
 
 Below are examples of how to use the `default-connector` connector's generated functions to execute each query. You can also follow the examples from the [Data Connect documentation](https://firebase.google.com/docs/data-connect/web-sdk#using-queries).
-
-## GetAllRuns
-You can execute the `GetAllRuns` query using the following action shortcut function, or by calling `executeQuery()` after calling the following `QueryRef` function, both of which are defined in [dataconnect-generated/index.d.ts](./index.d.ts):
-```typescript
-getAllRuns(vars: GetAllRunsVariables, options?: ExecuteQueryOptions): QueryPromise<GetAllRunsData, GetAllRunsVariables>;
-
-interface GetAllRunsRef {
-  ...
-  /* Allow users to create refs without passing in DataConnect */
-  (vars: GetAllRunsVariables): QueryRef<GetAllRunsData, GetAllRunsVariables>;
-}
-export const getAllRunsRef: GetAllRunsRef;
-```
-You can also pass in a `DataConnect` instance to the action shortcut function or `QueryRef` function.
-```typescript
-getAllRuns(dc: DataConnect, vars: GetAllRunsVariables, options?: ExecuteQueryOptions): QueryPromise<GetAllRunsData, GetAllRunsVariables>;
-
-interface GetAllRunsRef {
-  ...
-  (dc: DataConnect, vars: GetAllRunsVariables): QueryRef<GetAllRunsData, GetAllRunsVariables>;
-}
-export const getAllRunsRef: GetAllRunsRef;
-```
-
-If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the getAllRunsRef:
-```typescript
-const name = getAllRunsRef.operationName;
-console.log(name);
-```
-
-### Variables
-The `GetAllRuns` query requires an argument of type `GetAllRunsVariables`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
-
-```typescript
-export interface GetAllRunsVariables {
-  userId: string;
-}
-```
-### Return Type
-Recall that executing the `GetAllRuns` query returns a `QueryPromise` that resolves to an object with a `data` property.
-
-The `data` property is an object of type `GetAllRunsData`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
-```typescript
-export interface GetAllRunsData {
-  runs: ({
-    id: UUIDString;
-    date: DateString;
-    distanceMiles: number;
-    durationMinutes: number;
-  } & Run_Key)[];
-}
-```
-### Using `GetAllRuns`'s action shortcut function
-
-```typescript
-import { getDataConnect } from 'firebase/data-connect';
-import { connectorConfig, getAllRuns, GetAllRunsVariables } from '@dataconnect/generated';
-
-// The `GetAllRuns` query requires an argument of type `GetAllRunsVariables`:
-const getAllRunsVars: GetAllRunsVariables = {
-  userId: ..., 
-};
-
-// Call the `getAllRuns()` function to execute the query.
-// You can use the `await` keyword to wait for the promise to resolve.
-const { data } = await getAllRuns(getAllRunsVars);
-// Variables can be defined inline as well.
-const { data } = await getAllRuns({ userId: ..., });
-
-// You can also pass in a `DataConnect` instance to the action shortcut function.
-const dataConnect = getDataConnect(connectorConfig);
-const { data } = await getAllRuns(dataConnect, getAllRunsVars);
-
-console.log(data.runs);
-
-// Or, you can use the `Promise` API.
-getAllRuns(getAllRunsVars).then((response) => {
-  const data = response.data;
-  console.log(data.runs);
-});
-```
-
-### Using `GetAllRuns`'s `QueryRef` function
-
-```typescript
-import { getDataConnect, executeQuery } from 'firebase/data-connect';
-import { connectorConfig, getAllRunsRef, GetAllRunsVariables } from '@dataconnect/generated';
-
-// The `GetAllRuns` query requires an argument of type `GetAllRunsVariables`:
-const getAllRunsVars: GetAllRunsVariables = {
-  userId: ..., 
-};
-
-// Call the `getAllRunsRef()` function to get a reference to the query.
-const ref = getAllRunsRef(getAllRunsVars);
-// Variables can be defined inline as well.
-const ref = getAllRunsRef({ userId: ..., });
-
-// You can also pass in a `DataConnect` instance to the `QueryRef` function.
-const dataConnect = getDataConnect(connectorConfig);
-const ref = getAllRunsRef(dataConnect, getAllRunsVars);
-
-// Call `executeQuery()` on the reference to execute the query.
-// You can use the `await` keyword to wait for the promise to resolve.
-const { data } = await executeQuery(ref);
-
-console.log(data.runs);
-
-// Or, you can use the `Promise` API.
-executeQuery(ref).then((response) => {
-  const data = response.data;
-  console.log(data.runs);
-});
-```
-
-## GetAllRestaurants
-You can execute the `GetAllRestaurants` query using the following action shortcut function, or by calling `executeQuery()` after calling the following `QueryRef` function, both of which are defined in [dataconnect-generated/index.d.ts](./index.d.ts):
-```typescript
-getAllRestaurants(options?: ExecuteQueryOptions): QueryPromise<GetAllRestaurantsData, undefined>;
-
-interface GetAllRestaurantsRef {
-  ...
-  /* Allow users to create refs without passing in DataConnect */
-  (): QueryRef<GetAllRestaurantsData, undefined>;
-}
-export const getAllRestaurantsRef: GetAllRestaurantsRef;
-```
-You can also pass in a `DataConnect` instance to the action shortcut function or `QueryRef` function.
-```typescript
-getAllRestaurants(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<GetAllRestaurantsData, undefined>;
-
-interface GetAllRestaurantsRef {
-  ...
-  (dc: DataConnect): QueryRef<GetAllRestaurantsData, undefined>;
-}
-export const getAllRestaurantsRef: GetAllRestaurantsRef;
-```
-
-If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the getAllRestaurantsRef:
-```typescript
-const name = getAllRestaurantsRef.operationName;
-console.log(name);
-```
-
-### Variables
-The `GetAllRestaurants` query has no variables.
-### Return Type
-Recall that executing the `GetAllRestaurants` query returns a `QueryPromise` that resolves to an object with a `data` property.
-
-The `data` property is an object of type `GetAllRestaurantsData`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
-```typescript
-export interface GetAllRestaurantsData {
-  restaurants: ({
-    id: UUIDString;
-    name: string;
-    cuisine: string;
-    milesRequired: number;
-  } & Restaurant_Key)[];
-}
-```
-### Using `GetAllRestaurants`'s action shortcut function
-
-```typescript
-import { getDataConnect } from 'firebase/data-connect';
-import { connectorConfig, getAllRestaurants } from '@dataconnect/generated';
-
-
-// Call the `getAllRestaurants()` function to execute the query.
-// You can use the `await` keyword to wait for the promise to resolve.
-const { data } = await getAllRestaurants();
-
-// You can also pass in a `DataConnect` instance to the action shortcut function.
-const dataConnect = getDataConnect(connectorConfig);
-const { data } = await getAllRestaurants(dataConnect);
-
-console.log(data.restaurants);
-
-// Or, you can use the `Promise` API.
-getAllRestaurants().then((response) => {
-  const data = response.data;
-  console.log(data.restaurants);
-});
-```
-
-### Using `GetAllRestaurants`'s `QueryRef` function
-
-```typescript
-import { getDataConnect, executeQuery } from 'firebase/data-connect';
-import { connectorConfig, getAllRestaurantsRef } from '@dataconnect/generated';
-
-
-// Call the `getAllRestaurantsRef()` function to get a reference to the query.
-const ref = getAllRestaurantsRef();
-
-// You can also pass in a `DataConnect` instance to the `QueryRef` function.
-const dataConnect = getDataConnect(connectorConfig);
-const ref = getAllRestaurantsRef(dataConnect);
-
-// Call `executeQuery()` on the reference to execute the query.
-// You can use the `await` keyword to wait for the promise to resolve.
-const { data } = await executeQuery(ref);
-
-console.log(data.restaurants);
-
-// Or, you can use the `Promise` API.
-executeQuery(ref).then((response) => {
-  const data = response.data;
-  console.log(data.restaurants);
-});
-```
 
 ## GetAllRunsAndRestaurants
 You can execute the `GetAllRunsAndRestaurants` query using the following action shortcut function, or by calling `executeQuery()` after calling the following `QueryRef` function, both of which are defined in [dataconnect-generated/index.d.ts](./index.d.ts):
@@ -1136,7 +924,7 @@ Recall that executing the `UpdateMileageAfterRun` mutation returns a `MutationPr
 The `data` property is an object of type `UpdateMileageAfterRunData`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
 ```typescript
 export interface UpdateMileageAfterRunData {
-  mileage_update?: Mileage_Key | null;
+  mileage_upsert: Mileage_Key;
 }
 ```
 ### Using `UpdateMileageAfterRun`'s action shortcut function
@@ -1161,12 +949,12 @@ const { data } = await updateMileageAfterRun({ userId: ..., netMiles: ..., });
 const dataConnect = getDataConnect(connectorConfig);
 const { data } = await updateMileageAfterRun(dataConnect, updateMileageAfterRunVars);
 
-console.log(data.mileage_update);
+console.log(data.mileage_upsert);
 
 // Or, you can use the `Promise` API.
 updateMileageAfterRun(updateMileageAfterRunVars).then((response) => {
   const data = response.data;
-  console.log(data.mileage_update);
+  console.log(data.mileage_upsert);
 });
 ```
 
@@ -1195,12 +983,12 @@ const ref = updateMileageAfterRunRef(dataConnect, updateMileageAfterRunVars);
 // You can use the `await` keyword to wait for the promise to resolve.
 const { data } = await executeMutation(ref);
 
-console.log(data.mileage_update);
+console.log(data.mileage_upsert);
 
 // Or, you can use the `Promise` API.
 executeMutation(ref).then((response) => {
   const data = response.data;
-  console.log(data.mileage_update);
+  console.log(data.mileage_upsert);
 });
 ```
 

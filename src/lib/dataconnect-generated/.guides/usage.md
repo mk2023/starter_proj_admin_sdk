@@ -14,14 +14,8 @@ If a user is not using a supported framework, they can use the generated SDK dir
 Here's an example of how to use it with the first 5 operations:
 
 ```js
-import { getAllRuns, getAllRestaurants, getAllRunsAndRestaurants, getVisitedRestaurants, getMileage, addRun, addRestaurant, addVisitedRestaurant, deleteRestaurant, updateMileageAfterRun } from '@dataconnect/generated';
+import { getAllRunsAndRestaurants, getVisitedRestaurants, getMileage, addRun, addRestaurant, addVisitedRestaurant, deleteRestaurant, updateMileageAfterRun, createMileage, deleteAllData } from '@dataconnect/generated';
 
-
-// Operation GetAllRuns:  For variables, look at type GetAllRunsVars in ../index.d.ts
-const { data } = await GetAllRuns(dataConnect, getAllRunsVars);
-
-// Operation GetAllRestaurants: 
-const { data } = await GetAllRestaurants(dataConnect);
 
 // Operation GetAllRunsAndRestaurants:  For variables, look at type GetAllRunsAndRestaurantsVars in ../index.d.ts
 const { data } = await GetAllRunsAndRestaurants(dataConnect, getAllRunsAndRestaurantsVars);
@@ -46,6 +40,12 @@ const { data } = await DeleteRestaurant(dataConnect, deleteRestaurantVars);
 
 // Operation UpdateMileageAfterRun:  For variables, look at type UpdateMileageAfterRunVars in ../index.d.ts
 const { data } = await UpdateMileageAfterRun(dataConnect, updateMileageAfterRunVars);
+
+// Operation CreateMileage:  For variables, look at type CreateMileageVars in ../index.d.ts
+const { data } = await CreateMileage(dataConnect, createMileageVars);
+
+// Operation DeleteAllData: 
+const { data } = await DeleteAllData(dataConnect);
 
 
 ```

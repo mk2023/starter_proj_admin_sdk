@@ -40,37 +40,6 @@ async function initial_push() {
     });
 
     let current_mileage = 0;
-    // Inputting Runs:
-    console.log("🏃♂️ Logging initial workouts...");
-
-    // const runsToLog: AddRunVariables[] = [
-    //   { date: "2026-05-18", distanceMiles: 2.69, durationMinutes: 29 },
-    //   { date: "2026-05-08", distanceMiles: 1.74, durationMinutes: 16 },
-    //   { date: "2026-04-26", distanceMiles: 13.65, durationMinutes: 139 },
-    //   { date: "2026-04-25", distanceMiles: 1.88, durationMinutes: 20 },
-    //   { date: "2026-04-23", distanceMiles: 3.43, durationMinutes: 38 },
-    //   { date: "2026-04-18", distanceMiles: 6.22, durationMinutes: 66 },
-    //   { date: "2026-04-15", distanceMiles: 2.77, durationMinutes: 31 },
-    //   { date: "2026-04-14", distanceMiles: 0.91, durationMinutes: 9 },
-    //   { date: "2026-04-11", distanceMiles: 12.53, durationMinutes: 139 },
-    //   { date: "2026-04-10", distanceMiles: 3.13, durationMinutes: 31 },
-    //   { date: "2026-04-03", distanceMiles: 6.19, durationMinutes: 63 },
-    //   { date: "2026-03-31", distanceMiles: 2.49, durationMinutes: 28 },
-    //   { date: "2026-03-29", distanceMiles: 5.21, durationMinutes: 61 },
-    //   { date: "2026-03-26", distanceMiles: 1.90, durationMinutes: 21 },
-    //   { date: "2026-03-25", distanceMiles: 3.13, durationMinutes: 33 },
-    //   { date: "2026-03-22", distanceMiles: 2.80, durationMinutes: 30 },
-    //   { date: "2026-03-11", distanceMiles: 3.11, durationMinutes: 31 },
-    // ];
-
-    // for (const runVars of runsToLog) {
-    //   console.log(`   -> Logging run on ${runVars.date} (${runVars.distanceMiles} miles)`);
-    //   await dataConnect.executeGraphql<AddRunData, AddRunVariables>(queriesRaw, {
-    //     operationName: 'AddRun',
-    //     variables: runVars
-    //   });
-    //   current_mileage += runVars.distanceMiles;
-    // }
 
     // Inputting Restarants:
     console.log("🎁 Adding restauarnts to wishlist");
